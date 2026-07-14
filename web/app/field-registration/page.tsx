@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { MobileBottomNav, type MobileNavItem } from "@/components/layout/mobile-bottom-nav";
 
 type Step = 1 | 2 | 3;
 
-const MOBILE_NAV = [
+const MOBILE_NAV: MobileNavItem[] = [
   { key: "home", label: "Home", icon: "home", href: "/" },
   { key: "register", label: "Register", icon: "person_add", href: "/field-registration" },
   { key: "deliveries", label: "Deliveries", icon: "task_alt", href: "/deliveries" },
@@ -86,30 +86,32 @@ export default function FieldRegistrationPage() {
   }
 
   return (
-    <div className="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+    <div className="mesh-bg text-on-surface font-body-md min-h-screen flex flex-col">
       {/* Top Navigation */}
-      <header className="bg-surface border-b border-outline-variant fixed top-0 w-full z-50 h-16 flex justify-between items-center px-margin-mobile md:px-gutter">
+      <header className="bg-surface/90 backdrop-blur-md border-b border-outline-variant fixed top-0 w-full z-50 h-16 flex justify-between items-center px-margin-mobile md:px-gutter">
         <div className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img alt="TrustBridge Logo" className="h-8 w-8 object-contain" src={REGISTRAR_LOGO} />
           <span className="text-headline-md font-headline-md font-bold text-primary">TrustBridge</span>
         </div>
-        <div className="flex items-center bg-secondary-container/30 px-3 py-1 rounded-full border border-secondary/20">
-          <span
-            className="material-symbols-outlined text-secondary text-[18px] mr-1"
-            style={{ fontVariationSettings: "'FILL' 1" }}
-          >
-            wifi
+        <div className="flex items-center gap-2 bg-secondary-container/30 px-3 py-1 rounded-full border border-secondary/20">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary" />
           </span>
-          <span className="text-label-mono font-label-mono text-on-secondary-container">ONLINE</span>
+          <span className="text-label-mono font-label-mono text-on-secondary-container text-[11px]">ONLINE</span>
         </div>
       </header>
 
-      <main className="flex-grow pt-20 pb-24 px-4 max-w-md mx-auto w-full">
+      <main className="flex-grow pt-20 pb-28 px-4 max-w-md mx-auto w-full">
         {!success && (
           <div className="mb-8 px-2">
             <div className="flex justify-between items-center relative">
-              <div className="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant -z-10 -translate-y-1/2" />
+              <div className="absolute top-5 left-0 w-full h-[2px] bg-outline-variant -z-10" />
+              <div
+                className="absolute top-5 left-0 h-[2px] bg-secondary -z-10 transition-all duration-500"
+                style={{ width: step === 1 ? "0%" : step === 2 ? "50%" : "100%" }}
+              />
               <div className="flex flex-col items-center gap-2">
                 <StepDot index={1} current={step} />
                 <span className="text-label-mono font-label-mono text-primary text-[10px]">IDENTITY</span>
@@ -142,7 +144,7 @@ export default function FieldRegistrationPage() {
                 <button
                   type="button"
                   onClick={() => setPhotoCaptured(true)}
-                  className="w-full aspect-[4/3] bg-surface-container rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center overflow-hidden relative cursor-pointer active:scale-[0.98] transition-transform"
+                  className="focus-ring w-full aspect-[4/3] bg-surface-container rounded-2xl border-2 border-dashed border-outline-variant hover:border-primary/40 flex flex-col items-center justify-center overflow-hidden relative cursor-pointer active:scale-[0.98] transition-all"
                 >
                   <span className="material-symbols-outlined text-outline text-[48px] mb-2">add_a_photo</span>
                   <p className="text-body-md font-semibold text-outline">Capture Identification Photo</p>
@@ -205,7 +207,7 @@ export default function FieldRegistrationPage() {
 
               <button
                 onClick={() => setStep(2)}
-                className="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:shadow-lg"
+                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container"
               >
                 <span>Continue to Verification</span>
                 <span className="material-symbols-outlined">arrow_forward</span>
@@ -224,7 +226,7 @@ export default function FieldRegistrationPage() {
                 Review captured data before anchoring to blockchain.
               </p>
             </div>
-            <div className="bg-surface-container-low rounded-xl border border-outline-variant p-4 space-y-4 mb-8">
+            <div className="card-surface-flat rounded-2xl p-4 space-y-4 mb-8">
               <div className="flex items-center gap-4 border-b border-outline-variant/30 pb-4">
                 <div
                   className="w-16 h-16 rounded-lg bg-cover bg-center border border-primary/20"
@@ -274,14 +276,14 @@ export default function FieldRegistrationPage() {
               </div>
               <button
                 onClick={() => setStep(3)}
-                className="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md"
+                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container"
               >
                 <span className="material-symbols-outlined">verified</span>
                 <span>Confirm &amp; Generate PIN</span>
               </button>
               <button
                 onClick={() => setStep(1)}
-                className="w-full h-14 bg-transparent text-on-surface-variant rounded-xl font-semibold text-body-md flex items-center justify-center gap-2 active:bg-surface-container transition-all"
+                className="focus-ring w-full h-14 bg-transparent text-on-surface-variant rounded-full font-semibold text-body-md flex items-center justify-center gap-2 active:bg-surface-container transition-all"
               >
                 <span>Back to Edit</span>
               </button>
@@ -311,7 +313,7 @@ export default function FieldRegistrationPage() {
                 {[0, 1, 2, 3].map((i) => (
                   <input
                     key={i}
-                    className="pin-box w-14 h-18 text-center text-headline-lg font-label-mono bg-surface-container-lowest border-2 border-outline-variant rounded-xl"
+                    className="pin-box w-14 h-18 text-center text-headline-lg font-label-mono bg-surface-container-lowest border-2 border-outline-variant rounded-2xl shadow-sm"
                     maxLength={1}
                     readOnly
                     placeholder="•"
@@ -326,26 +328,26 @@ export default function FieldRegistrationPage() {
                   <button
                     key={d}
                     onClick={() => pressDigit(d)}
-                    className="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md"
+                    className="focus-ring h-14 bg-white border border-outline-variant/60 hover:bg-surface-container-high active:scale-95 rounded-2xl font-bold text-headline-md shadow-sm transition-all"
                   >
                     {d}
                   </button>
                 ))}
                 <button
                   onClick={pressBackspace}
-                  className="h-14 bg-surface-container-high hover:bg-surface-container-highest rounded-xl flex items-center justify-center"
+                  className="focus-ring h-14 bg-surface-container-high hover:bg-surface-container-highest active:scale-95 rounded-2xl flex items-center justify-center transition-all"
                 >
                   <span className="material-symbols-outlined">backspace</span>
                 </button>
                 <button
                   onClick={() => pressDigit("0")}
-                  className="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md"
+                  className="focus-ring h-14 bg-white border border-outline-variant/60 hover:bg-surface-container-high active:scale-95 rounded-2xl font-bold text-headline-md shadow-sm transition-all"
                 >
                   0
                 </button>
                 <button
                   onClick={submitRegistration}
-                  className="h-14 bg-secondary text-on-secondary rounded-xl flex items-center justify-center"
+                  className="focus-ring h-14 bg-secondary text-on-secondary rounded-2xl flex items-center justify-center active:scale-95 transition-all shadow-sm shadow-secondary/30"
                 >
                   <span className="material-symbols-outlined">check_circle</span>
                 </button>
@@ -359,7 +361,7 @@ export default function FieldRegistrationPage() {
               <button
                 onClick={submitRegistration}
                 disabled={pin.length < 4}
-                className="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md mt-4 disabled:opacity-40"
+                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 mt-4 disabled:opacity-40 disabled:shadow-none"
               >
                 <span>Submit Registration</span>
               </button>
@@ -380,11 +382,11 @@ export default function FieldRegistrationPage() {
                 <div className="absolute inset-0 rounded-full border-4 border-secondary animate-ping opacity-25" />
               </div>
               <h1 className="text-headline-lg font-headline-lg text-primary mb-4">Registration Complete</h1>
-              <p className="text-body-lg text-on-surface-variant max-w-xs mx-auto mb-8">
+              <p className="text-body-lg text-on-surface-variant max-w-xs mx-auto mb-6">
                 Beneficiary <span className="font-bold text-primary">{shortName}</span> has been successfully
                 registered and encrypted.
               </p>
-              <div className="bg-surface-container rounded-2xl p-6 border border-outline-variant/30 mb-8 max-w-xs mx-auto">
+              <div className="card-surface-flat rounded-2xl p-6 mb-4 max-w-xs mx-auto">
                 <p className="text-label-mono font-label-mono text-[10px] text-on-surface-variant mb-2">
                   STELLAR REFERENCE HASH
                 </p>
@@ -394,10 +396,18 @@ export default function FieldRegistrationPage() {
                   <span>SYNCED TO CLOUD</span>
                 </div>
               </div>
+              <div className="flex items-start gap-2.5 text-left bg-primary/5 border border-primary/10 rounded-2xl p-4 mb-8 max-w-xs mx-auto">
+                <span className="material-symbols-outlined text-primary text-[20px]">currency_exchange</span>
+                <p className="text-xs text-on-surface-variant leading-relaxed">
+                  They can now collect this aid on their own feature phone — just their{" "}
+                  <span className="font-bold text-primary">Reference ID + PIN</span> at any MoneyGram-enabled
+                  off-ramp outlet.
+                </p>
+              </div>
             </div>
             <button
               onClick={registerNext}
-              className="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg active:scale-95 transition-all shadow-md"
+              className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container"
             >
               Register Next Beneficiary
             </button>
@@ -405,31 +415,7 @@ export default function FieldRegistrationPage() {
         )}
       </main>
 
-      {/* Bottom Navigation Bar */}
-      <nav className="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-2 bg-surface/90 backdrop-blur-md border-t border-outline-variant shadow-lg z-50 md:hidden">
-        {MOBILE_NAV.map((item) => {
-          const isActive = item.key === ACTIVE_KEY;
-          return (
-            <Link
-              key={item.key}
-              href={item.href}
-              className={
-                isActive
-                  ? "flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1"
-                  : "flex flex-col items-center justify-center text-on-surface-variant px-4 py-1"
-              }
-            >
-              <span
-                className="material-symbols-outlined"
-                style={isActive ? { fontVariationSettings: "'FILL' 1" } : undefined}
-              >
-                {item.icon}
-              </span>
-              <span className="text-label-sm font-body-md text-[10px]">{item.label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+      <MobileBottomNav items={MOBILE_NAV} active={ACTIVE_KEY} />
     </div>
   );
 }
