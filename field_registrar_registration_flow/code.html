@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TrustBridge Field App - Registration Flow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&family=Manrope:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .pin-box:focus-within {
+            border-color: #003874;
+            box-shadow: 0 0 0 2px rgba(0, 56, 116, 0.1);
+        }
+        .step-transition {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d8e3fa",
+                        "primary": "#003874",
+                        "primary-fixed-dim": "#aac7ff",
+                        "tertiary-fixed-dim": "#ffb599",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "on-primary-container": "#a3c3ff",
+                        "surface-dim": "#cfdaf1",
+                        "outline": "#737782",
+                        "on-tertiary-container": "#ffaf90",
+                        "secondary-fixed": "#7cf7de",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#370e00",
+                        "surface-container-high": "#dee8ff",
+                        "primary-container": "#1a4f95",
+                        "secondary": "#006b5c",
+                        "tertiary": "#682200",
+                        "inverse-on-surface": "#ebf1ff",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#08458b",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#424751",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#8e3100",
+                        "secondary-fixed-dim": "#5ddbc2",
+                        "inverse-surface": "#263142",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#111c2c",
+                        "on-secondary-fixed": "#00201b",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c3c6d2",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#005045",
+                        "surface": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#aac7ff",
+                        "surface-container-low": "#f0f3ff",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111c2c",
+                        "secondary-container": "#79f4db",
+                        "surface-tint": "#2e5ea5",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#007060",
+                        "surface-container-highest": "#d8e3fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "2rem",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1440px",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "label-mono": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation (Shell Implementation) -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline fixed top-0 w-full z-50 h-16 flex justify-between items-center px-margin-mobile md:px-gutter">
+<div class="flex items-center gap-2">
+<img alt="TrustBridge Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4qvazOKqknrlOXokb53n1pm1zsefSITMbgdXDMbkt9dkgLyD6xnEm_Gzn6rMnv4WNVZTPluj_W4PtmH11fA-qlvoK_XzvDQUqO-bYZG_6jK10SU0gI7ubz5Q-hbleSiA2Ctlh8PuGdjw0vP48B0EH6quQuu3TF08QbI1VzUWbRQar2VPnD2PtjB2GgRWfpwWG59Vj7gJBaD_WDtPfJKjGBUh5gkqxvvfEN5K_5RCWLutFM3ZzLIEe"/>
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">TrustBridge</span>
+</div>
+<div class="flex items-center gap-3">
+<!-- Connectivity Indicator -->
+<div class="flex items-center bg-secondary-container/30 px-3 py-1 rounded-full border border-secondary/20">
+<span class="material-symbols-outlined text-secondary text-[18px] mr-1" style="font-variation-settings: 'FILL' 1;">wifi</span>
+<span class="text-label-mono font-label-mono text-on-secondary-container">ONLINE</span>
+</div>
+</div>
+</header>
+<main class="flex-grow pt-20 pb-24 px-4 max-w-md mx-auto w-full">
+<!-- Progress Stepper -->
+<div class="mb-8 px-2">
+<div class="flex justify-between items-center relative">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant -z-10 -translate-y-1/2"></div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-headline-md-mobile shadow-lg" id="step-dot-1">1</div>
+<span class="text-label-mono font-label-mono text-primary text-[10px]">IDENTITY</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-headline-md-mobile border-2 border-outline-variant" id="step-dot-2">2</div>
+<span class="text-label-mono font-label-mono text-on-surface-variant text-[10px]">VERIFY</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-headline-md-mobile border-2 border-outline-variant" id="step-dot-3">3</div>
+<span class="text-label-mono font-label-mono text-on-surface-variant text-[10px]">SECURE</span>
+</div>
+</div>
+</div>
+<!-- Step 1: Identity Capture -->
+<section class="step-transition" id="step-1">
+<div class="mb-stack-lg">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary mb-2">Register Beneficiary</h1>
+<p class="text-body-md text-on-surface-variant">Capture official details for humanitarian aid eligibility.</p>
+</div>
+<div class="space-y-6">
+<!-- Photo Capture Component -->
+<div class="relative group">
+<div class="w-full aspect-[4/3] bg-surface-container rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center overflow-hidden relative cursor-pointer active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-outline text-[48px] mb-2">add_a_photo</span>
+<p class="text-body-md font-semibold text-outline">Capture Identification Photo</p>
+<p class="text-[12px] text-outline/70 mt-1">Ensure clear lighting and face visibility</p>
+<!-- Overlay for "Preview" Simulation -->
+<div class="hidden absolute inset-0 bg-cover bg-center" data-alt="A high-contrast, professional portrait of an elderly man with weathered skin, wearing traditional clothing, set against a neutral outdoor humanitarian camp background. The lighting is bright and natural, emphasizing clarity and dignity. The style is sharp and modern, following the TrustBridge professional aesthetic." id="photo-preview" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA2LeqSVTc3XZC8xc-cj53GWpKllHPKxLx_uAsaHmttgbskUD3lVV7b1IQoFgv4jMZrI4H7lx9Z_ZFje5PtMtw8wZyu3SzyF3jWoa5kujJ2wDdIdee28Q9xk_IcCVH3g9ebp299FKYzDrKVf9Y9rbzxVDG1T5H_hmYwv3t4QIFksPXYyxc8BrqeY-WIHJWpgRdsx3ZRxuWmmgDqIjPnJlQZAShKJl3XsXxeSwjWpI6EZqR418oTqEI-')">
+<div class="absolute bottom-0 w-full bg-primary/80 backdrop-blur-sm p-2 text-center">
+<span class="text-on-primary text-[12px] font-bold">PHOTO CAPTURED</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Form Fields -->
+<div class="space-y-4">
+<div class="flex flex-col gap-1">
+<label class="text-label-mono font-label-mono text-on-surface-variant px-1 uppercase tracking-wider text-[11px]">Full Name (As per ID)</label>
+<input class="w-full h-14 px-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-body-lg font-body-lg" placeholder="Enter beneficiary full name" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-mono font-label-mono text-on-surface-variant px-1 uppercase tracking-wider text-[11px]">National ID Number</label>
+<input class="w-full h-14 px-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-body-lg font-body-lg" placeholder="E.g. 123456789" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-mono font-label-mono text-on-surface-variant px-1 uppercase tracking-wider text-[11px]">Phone Number (Optional)</label>
+<div class="relative">
+<span class="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">+254</span>
+<input class="w-full h-14 pl-14 pr-4 bg-surface-container-lowest border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-primary text-body-lg font-body-lg" placeholder="700 000 000" type="tel"/>
+</div>
+</div>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md hover:shadow-lg" onclick="nextStep(1, 2)">
+<span>Continue to Verification</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Step 2: Verification (Hidden by default) -->
+<section class="step-transition hidden" id="step-2">
+<div class="mb-stack-lg">
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary mb-2">Verify Information</h1>
+<p class="text-body-md text-on-surface-variant">Review captured data before anchoring to blockchain.</p>
+</div>
+<div class="bg-surface-container-low rounded-xl border border-outline-variant p-4 space-y-4 mb-8">
+<div class="flex items-center gap-4 border-b border-outline-variant/30 pb-4">
+<div class="w-16 h-16 rounded-lg bg-cover bg-center border border-primary/20" data-alt="A professional, close-up identification photo portrait of a middle-aged woman in a bright environment. The image has a clean, digital watermark 'VERIFIED' in subtle TrustBridge Blue. High-key lighting, professional humanitarian aid photography style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBDiRUx8AyTM6px7WF8G_Q4zES7VMcIBXL-EyPwARjM1khrKeJhDmFp0V0JRIRN2a5vWWhMNugUCV_8GmkyO2x5iS4Kl2OCqZz6UgWZlrdkLyhXcjq42vA8ukAgFb4iFoW3J3yxQIhUfeVfzDADpDZ5TgEz_sm6ZpXOHmNQYGEtqlKgEOIgwRk9L4gvWyTxSWtxMPtLywuiOXmr02eP8YXDHyzVRV9KBqJwvxsYWMZu90GFrXn4GciJ')"></div>
+<div>
+<p class="text-label-mono font-label-mono text-[10px] text-on-surface-variant">FULL NAME</p>
+<p class="text-body-lg font-bold">Mary Wambui Kamau</p>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<p class="text-label-mono font-label-mono text-[10px] text-on-surface-variant uppercase">ID Number</p>
+<p class="text-body-md font-semibold">29883441</p>
+</div>
+<div>
+<p class="text-label-mono font-label-mono text-[10px] text-on-surface-variant uppercase">Program</p>
+<span class="inline-flex bg-secondary/10 text-secondary text-[12px] font-bold px-2 py-0.5 rounded uppercase">Cash Support</span>
+</div>
+</div>
+<div class="bg-primary/5 p-3 rounded-lg border border-primary/10 flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">pin_drop</span>
+<div>
+<p class="text-label-mono font-label-mono text-[10px] text-on-surface-variant uppercase">Captured Location</p>
+<p class="text-body-md text-primary font-medium">Turkana Central, Sector 4</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-start gap-3 p-4 bg-tertiary-fixed/10 border border-tertiary-fixed-dim rounded-xl">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-body-md text-tertiary font-medium">By proceeding, you verify that the ID and person match. This action is logged for audit.</p>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md" onclick="nextStep(2, 3)">
+<span class="material-symbols-outlined">verified</span>
+<span>Confirm & Generate PIN</span>
+</button>
+<button class="w-full h-14 bg-transparent text-on-surface-variant rounded-xl font-semibold text-body-md flex items-center justify-center gap-2 active:bg-surface-container transition-all" onclick="nextStep(2, 1)">
+<span>Back to Edit</span>
+</button>
+</div>
+</section>
+<!-- Step 3: PIN Generation (Hidden by default) -->
+<section class="step-transition hidden" id="step-3">
+<div class="mb-stack-lg text-center">
+<div class="w-20 h-20 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-secondary/20">
+<span class="material-symbols-outlined text-secondary text-[40px]" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<h1 class="text-headline-lg-mobile font-headline-lg-mobile text-primary mb-2">Secure PIN Setup</h1>
+<p class="text-body-md text-on-surface-variant">Ask the beneficiary to enter a secret 4-digit PIN for future collections.</p>
+</div>
+<div class="space-y-8">
+<!-- PIN Input Grid -->
+<div class="flex justify-center gap-4">
+<input class="pin-box w-14 h-18 text-center text-headline-lg font-label-mono bg-surface-container-lowest border-2 border-outline-variant rounded-xl" maxlength="1" readonly="" type="password" value="8"/>
+<input class="pin-box w-14 h-18 text-center text-headline-lg font-label-mono bg-surface-container-lowest border-2 border-outline-variant rounded-xl" maxlength="1" readonly="" type="password" value="4"/>
+<input class="pin-box w-14 h-18 text-center text-headline-lg font-label-mono bg-surface-container-lowest border-2 border-outline-variant rounded-xl" maxlength="1" placeholder="•" readonly="" type="password"/>
+<input class="pin-box w-14 h-18 text-center text-headline-lg font-label-mono bg-surface-container-lowest border-2 border-outline-variant rounded-xl" maxlength="1" placeholder="•" readonly="" type="password"/>
+</div>
+<!-- Custom Keyboard (Simulated) -->
+<div class="grid grid-cols-3 gap-3">
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">1</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">2</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">3</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">4</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">5</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">6</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">7</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">8</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">9</button>
+<button class="h-14 bg-surface-container-high hover:bg-surface-container-highest rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">backspace</span>
+</button>
+<button class="h-14 bg-surface-container hover:bg-surface-container-high rounded-xl font-bold text-headline-md">0</button>
+<button class="h-14 bg-secondary text-on-secondary rounded-xl flex items-center justify-center">
+<span class="material-symbols-outlined">check_circle</span>
+</button>
+</div>
+<div class="bg-surface-container-highest/50 p-4 rounded-xl border border-outline-variant flex gap-3">
+<span class="material-symbols-outlined text-primary">visibility_off</span>
+<p class="text-[12px] text-on-surface-variant italic">Turn away from the screen and hand the device to the beneficiary for privacy.</p>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md mt-4" onclick="finishRegistration()">
+<span>Submit Registration</span>
+</button>
+</div>
+</section>
+<!-- Success Message (Post-flow) -->
+<section class="hidden text-center py-12" id="success-screen">
+<div class="mb-8">
+<div class="w-24 h-24 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl relative">
+<span class="material-symbols-outlined text-on-secondary text-[64px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<div class="absolute inset-0 rounded-full border-4 border-secondary animate-ping opacity-25"></div>
+</div>
+<h1 class="text-headline-lg font-headline-lg text-primary mb-4">Registration Complete</h1>
+<p class="text-body-lg text-on-surface-variant max-w-xs mx-auto mb-8">Beneficiary <span class="font-bold text-primary">Mary Kamau</span> has been successfully registered and encrypted.</p>
+<div class="bg-surface-container rounded-2xl p-6 border border-outline-variant/30 mb-8 max-w-xs mx-auto">
+<p class="text-label-mono font-label-mono text-[10px] text-on-surface-variant mb-2">STELLAR REFERENCE HASH</p>
+<code class="text-[12px] font-label-mono text-primary break-all">tb_0x4f2...3a92</code>
+<div class="mt-4 flex items-center justify-center gap-2 text-secondary font-bold text-label-mono">
+<span class="material-symbols-outlined text-[18px]">cloud_done</span>
+<span>SYNCED TO CLOUD</span>
+</div>
+</div>
+</div>
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-bold text-body-lg active:scale-95 transition-all shadow-md" onclick="location.reload()">
+                Register Next Beneficiary
+            </button>
+</section>
+</main>
+<!-- Bottom Navigation Bar (Shell Implementation) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline bg-surface/90 backdrop-blur-md shadow-lg z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-body-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person_add</span>
+<span class="text-label-sm font-body-md text-[10px]">Register</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-label-sm font-body-md text-[10px]">Deliveries</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined">sync</span>
+<span class="text-label-sm font-body-md text-[10px]">Sync</span>
+</a>
+</nav>
+<script>
+        function nextStep(current, next) {
+            const currentEl = document.getElementById(`step-${current}`);
+            const nextEl = document.getElementById(`step-${next}`);
+            
+            // Fade out current
+            currentEl.classList.add('opacity-0', '-translate-x-4');
+            
+            setTimeout(() => {
+                currentEl.classList.add('hidden');
+                nextEl.classList.remove('hidden');
+                
+                // Fade in next
+                requestAnimationFrame(() => {
+                    nextEl.classList.remove('opacity-0', 'translate-x-4');
+                    nextEl.classList.add('opacity-100', 'translate-x-0');
+                    
+                    // Update Stepper Dots
+                    for(let i = 1; i <= 3; i++) {
+                        const dot = document.getElementById(`step-dot-${i}`);
+                        if (i < next) {
+                            dot.innerHTML = '<span class="material-symbols-outlined">check</span>';
+                            dot.className = 'w-10 h-10 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold shadow-md';
+                        } else if (i === next) {
+                            dot.className = 'w-10 h-10 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-headline-md-mobile shadow-lg';
+                        } else {
+                            dot.className = 'w-10 h-10 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-headline-md-mobile border-2 border-outline-variant';
+                        }
+                    }
+                });
+            }, 300);
+        }
+
+        function finishRegistration() {
+            const step3 = document.getElementById('step-3');
+            const success = document.getElementById('success-screen');
+            const stepper = document.querySelector('.mb-8.px-2'); // Stepper container
+            
+            step3.classList.add('opacity-0', 'scale-95');
+            
+            setTimeout(() => {
+                step3.classList.add('hidden');
+                stepper.classList.add('hidden');
+                success.classList.remove('hidden');
+                
+                requestAnimationFrame(() => {
+                    success.classList.remove('opacity-0');
+                    success.classList.add('opacity-100');
+                });
+            }, 300);
+        }
+
+        // Handle Photo Click Simulation
+        const photoUpload = document.querySelector('.aspect-\\[4\\/3\\]');
+        photoUpload.addEventListener('click', () => {
+            const preview = document.getElementById('photo-preview');
+            preview.classList.remove('hidden');
+            preview.classList.add('animate-pulse');
+            setTimeout(() => preview.classList.remove('animate-pulse'), 1000);
+        });
+    </script>
+</body></html>

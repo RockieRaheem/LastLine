@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TrustBridge | Program Management Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d8e3fa",
+                        "primary": "#003874",
+                        "primary-fixed-dim": "#aac7ff",
+                        "tertiary-fixed-dim": "#ffb599",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "on-primary-container": "#a3c3ff",
+                        "surface-dim": "#cfdaf1",
+                        "outline": "#737782",
+                        "on-tertiary-container": "#ffaf90",
+                        "secondary-fixed": "#7cf7de",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#370e00",
+                        "surface-container-high": "#dee8ff",
+                        "primary-container": "#1a4f95",
+                        "secondary": "#006b5c",
+                        "tertiary": "#682200",
+                        "inverse-on-surface": "#ebf1ff",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#08458b",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#424751",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#8e3100",
+                        "secondary-fixed-dim": "#5ddbc2",
+                        "inverse-surface": "#263142",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#111c2c",
+                        "on-secondary-fixed": "#00201b",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c3c6d2",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#005045",
+                        "surface": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#aac7ff",
+                        "surface-container-low": "#f0f3ff",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111c2c",
+                        "secondary-container": "#79f4db",
+                        "surface-tint": "#2e5ea5",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#007060",
+                        "surface-container-highest": "#d8e3fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "2rem",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1440px",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "label-mono": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .pulse-dot {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+        .gradient-mesh {
+            background-color: #f9f9ff;
+            background-image: 
+                radial-gradient(at 0% 0%, #d6e3ff 0px, transparent 50%),
+                radial-gradient(at 100% 0%, #e7eeff 0px, transparent 50%),
+                radial-gradient(at 100% 100%, #f0f3ff 0px, transparent 50%),
+                radial-gradient(at 0% 100%, #d8e3fa 0px, transparent 50%);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<div class="flex h-screen overflow-hidden">
+<!-- Side Navigation Bar -->
+<aside class="bg-surface-container dark:bg-inverse-surface border-r border-outline-variant dark:border-outline h-screen w-64 hidden md:flex flex-col flex-shrink-0 z-30">
+<div class="p-stack-md flex flex-col space-y-stack-sm h-full">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 px-2 py-4 mb-4">
+<img alt="TrustBridge Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4qvazOKqknrlOXokb53n1pm1zsefSITMbgdXDMbkt9dkgLyD6xnEm_Gzn6rMnv4WNVZTPluj_W4PtmH11fA-qlvoK_XzvDQUqO-bYZG_6jK10SU0gI7ubz5Q-hbleSiA2Ctlh8PuGdjw0vP48B0EH6quQuu3TF08QbI1VzUWbRQar2VPnD2PtjB2GgRWfpwWG59Vj7gJBaD_WDtPfJKjGBUh5gkqxvvfEN5K_5RCWLutFM3ZzLIEe"/>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">TrustBridge</h1>
+<p class="text-[10px] text-on-surface-variant tracking-wider uppercase">Institutional Trust</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container font-bold rounded-xl active:opacity-80 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-body-md font-body-md">Programmes</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-body-md font-body-md">Beneficiaries</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="text-body-md font-body-md">Deliveries</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+<span class="text-body-md font-body-md">Fraud Alerts</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="text-body-md font-body-md">Audit Logs</span>
+</a>
+</nav>
+<!-- Footer Nav -->
+<div class="pt-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-body-md font-body-md">Support</span>
+</a>
+<div class="mt-6 p-4 bg-primary text-on-primary rounded-xl text-center cursor-pointer hover:bg-primary-container transition-colors">
+<p class="font-bold text-label-mono">Approve Batch</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden bg-background">
+<!-- Top App Bar -->
+<header class="bg-surface border-b border-outline-variant h-16 flex justify-between items-center px-gutter flex-shrink-0 z-20">
+<div class="flex items-center gap-4">
+<div class="md:hidden">
+<img alt="TrustBridge" class="w-8 h-8" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4qvazOKqknrlOXokb53n1pm1zsefSITMbgdXDMbkt9dkgLyD6xnEm_Gzn6rMnv4WNVZTPluj_W4PtmH11fA-qlvoK_XzvDQUqO-bYZG_6jK10SU0gI7ubz5Q-hbleSiA2Ctlh8PuGdjw0vP48B0EH6quQuu3TF08QbI1VzUWbRQar2VPnD2PtjB2GgRWfpwWG59Vj7gJBaD_WDtPfJKjGBUh5gkqxvvfEN5K_5RCWLutFM3ZzLIEe"/>
+</div>
+<div class="flex flex-col">
+<h2 class="text-headline-md font-headline-md font-bold text-primary">Program Dashboard</h2>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary pulse-dot"></span>
+<p class="text-[12px] text-secondary font-label-mono uppercase tracking-tighter">Live Network Status: Operational</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex flex-col items-end mr-2">
+<span class="text-label-mono text-on-surface font-bold leading-none">Admin User</span>
+<span class="text-[10px] text-on-surface-variant leading-none">Global Administrator</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold overflow-hidden border border-outline-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+</div>
+</header>
+<!-- Dashboard Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-gutter custom-scrollbar">
+<div class="max-w-[1440px] mx-auto space-y-gutter">
+<!-- Top Row: Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Disbursed -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between group hover:border-primary transition-colors">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+</div>
+<span class="text-secondary text-label-mono font-bold">+12.5%</span>
+</div>
+<div class="mt-4">
+<p class="text-on-surface-variant text-label-mono uppercase text-xs">Total Disbursed</p>
+<h3 class="text-headline-md font-headline-md text-primary">$4,280,450</h3>
+</div>
+</div>
+<!-- Active Deliveries -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between group hover:border-primary transition-colors">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-secondary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-secondary" data-icon="local_shipping">local_shipping</span>
+</div>
+<span class="text-secondary text-label-mono font-bold">Active</span>
+</div>
+<div class="mt-4">
+<p class="text-on-surface-variant text-label-mono uppercase text-xs">Active Deliveries</p>
+<h3 class="text-headline-md font-headline-md text-primary">12,842</h3>
+</div>
+</div>
+<!-- Verified Beneficiaries -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between group hover:border-primary transition-colors">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-primary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-primary" data-icon="verified">verified</span>
+</div>
+<span class="text-on-surface-variant text-label-mono">98% Goal</span>
+</div>
+<div class="mt-4">
+<p class="text-on-surface-variant text-label-mono uppercase text-xs">Verified Beneficiaries</p>
+<h3 class="text-headline-md font-headline-md text-primary">45,920</h3>
+</div>
+</div>
+<!-- Blockchain Sync -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col justify-between group hover:border-primary transition-colors">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-tertiary-container/10 rounded-lg">
+<span class="material-symbols-outlined text-tertiary" data-icon="hub">hub</span>
+</div>
+<span class="text-secondary text-label-mono font-bold">Synced</span>
+</div>
+<div class="mt-4">
+<p class="text-on-surface-variant text-label-mono uppercase text-xs">Stellar Anchor Proofs</p>
+<h3 class="text-headline-md font-headline-md text-primary">100.0%</h3>
+</div>
+</div>
+</div>
+<!-- Middle Row: Charts and Alerts -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Real-time Delivery Pulse -->
+<div class="lg:col-span-2 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h4 class="text-body-lg font-headline-md text-on-surface">Delivery Pulse</h4>
+<p class="text-on-surface-variant text-label-mono text-xs">Success vs. Exceptions (Last 24 Hours)</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-1">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="text-xs text-on-surface-variant font-label-mono">Verified</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-3 h-3 rounded-full bg-error"></span>
+<span class="text-xs text-on-surface-variant font-label-mono">Alerts</span>
+</div>
+</div>
+</div>
+<!-- Mock Visualization -->
+<div class="flex-1 w-full h-64 bg-surface-container flex items-end justify-around p-4 gap-1 rounded-lg">
+<!-- Bars -->
+<div class="w-full flex items-end justify-around h-full">
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 60%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 45%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 70%"></div>
+<div class="w-6 bg-error/80 rounded-t-sm" style="height: 15%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 85%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 40%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 65%"></div>
+<div class="w-6 bg-error/80 rounded-t-sm" style="height: 10%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 90%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 75%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 55%"></div>
+<div class="w-6 bg-secondary/80 rounded-t-sm" style="height: 45%"></div>
+</div>
+</div>
+</div>
+<!-- Actionable Alerts Column -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm flex flex-col h-[400px]">
+<h4 class="text-body-lg font-headline-md text-on-surface mb-4">Actionable Alerts</h4>
+<div class="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2">
+<!-- Alert Item 1 -->
+<div class="p-3 bg-error-container/20 border border-error/20 rounded-lg flex gap-3 items-start animate-fade-in">
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+<div>
+<p class="text-sm font-bold text-error">High-Risk Fraud Event</p>
+<p class="text-xs text-on-surface-variant">Duplicate PIN attempt detected in Sector 4G. Verification halted.</p>
+<div class="mt-2 flex gap-2">
+<button class="px-3 py-1 bg-error text-white text-[10px] font-bold rounded uppercase">Block ID</button>
+<button class="px-3 py-1 bg-surface border border-outline-variant text-[10px] font-bold rounded uppercase">Investigate</button>
+</div>
+</div>
+</div>
+<!-- Alert Item 2 -->
+<div class="p-3 bg-primary-container/10 border border-primary/20 rounded-lg flex gap-3 items-start">
+<span class="material-symbols-outlined text-primary" data-icon="inventory_2">inventory_2</span>
+<div>
+<p class="text-sm font-bold text-primary">Batch Approval Required</p>
+<p class="text-xs text-on-surface-variant">Batch #902 (Deliveries: 450) ready for cryptographic sign-off.</p>
+<div class="mt-2">
+<button class="px-3 py-1 bg-primary text-white text-[10px] font-bold rounded uppercase">Sign &amp; Release</button>
+</div>
+</div>
+</div>
+<!-- Alert Item 3 -->
+<div class="p-3 bg-surface-container border border-outline-variant rounded-lg flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="cloud_sync">cloud_sync</span>
+<div>
+<p class="text-sm font-bold text-on-surface">Node Sync Delayed</p>
+<p class="text-xs text-on-surface-variant">Kakuma Sub-Node reporting 12m latency. Retrying local sync.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: Recent Transaction Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h4 class="text-body-lg font-headline-md text-on-surface">Live Delivery Ledger</h4>
+<div class="flex gap-2">
+<button class="flex items-center gap-1 px-3 py-1 text-label-mono text-xs border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span> Filter
+                                </button>
+<button class="flex items-center gap-1 px-3 py-1 text-label-mono text-xs border border-outline-variant rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="download">download</span> Export
+                                </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container text-on-surface-variant text-[11px] font-label-mono uppercase tracking-widest">
+<tr>
+<th class="px-6 py-4">Transaction Hash</th>
+<th class="px-6 py-4">Beneficiary</th>
+<th class="px-6 py-4">Location</th>
+<th class="px-6 py-4">Amount</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Evidence</th>
+</tr>
+</thead>
+<tbody class="text-sm divide-y divide-outline-variant/30">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-mono text-xs text-primary">0x4a2c...e901</td>
+<td class="px-6 py-4 font-bold">M. Adan</td>
+<td class="px-6 py-4 text-on-surface-variant">Turkana West</td>
+<td class="px-6 py-4">$120.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span> Verified
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="visibility">visibility</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-mono text-xs text-primary">0x88f1...33d2</td>
+<td class="px-6 py-4 font-bold">J. Ekiru</td>
+<td class="px-6 py-4 text-on-surface-variant">Lodwar South</td>
+<td class="px-6 py-4">$85.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-[10px] font-bold">
+<span class="material-symbols-outlined text-[12px]" data-icon="schedule">schedule</span> Pending
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="visibility">visibility</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-mono text-xs text-primary">0xde33...a009</td>
+<td class="px-6 py-4 font-bold">A. Ngasike</td>
+<td class="px-6 py-4 text-on-surface-variant">Kalobeyei</td>
+<td class="px-6 py-4">$150.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container text-[10px] font-bold">
+<span class="material-symbols-outlined text-[12px]" data-icon="error">error</span> Flagged
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="visibility">visibility</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-mono text-xs text-primary">0xc442...441b</td>
+<td class="px-6 py-4 font-bold">E. Lowane</td>
+<td class="px-6 py-4 text-on-surface-variant">Kakuma 1</td>
+<td class="px-6 py-4">$95.00</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold">
+<span class="material-symbols-outlined text-[12px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span> Verified
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-primary cursor-pointer" data-icon="visibility">visibility</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Navigation -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-2 bg-surface/90 backdrop-blur-md border-t border-outline-variant shadow-lg md:hidden z-50">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1 scale-90 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] font-body-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+<span class="text-[10px] font-body-md">Register</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="task_alt">task_alt</span>
+<span class="text-[10px] font-body-md">Deliveries</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+<span class="text-[10px] font-body-md">Sync</span>
+</a>
+</nav>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        // Simple hover effects and live clock logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const tableRows = document.querySelectorAll('tbody tr');
+            tableRows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    row.style.cursor = 'pointer';
+                });
+            });
+
+            // Mock live data update notification
+            setTimeout(() => {
+                const statusDot = document.querySelector('.pulse-dot');
+                if(statusDot) {
+                    statusDot.classList.remove('bg-secondary');
+                    statusDot.classList.add('bg-tertiary-fixed-dim');
+                    setTimeout(() => {
+                        statusDot.classList.remove('bg-tertiary-fixed-dim');
+                        statusDot.classList.add('bg-secondary');
+                    }, 1000);
+                }
+            }, 5000);
+        });
+    </script>
+</body></html>

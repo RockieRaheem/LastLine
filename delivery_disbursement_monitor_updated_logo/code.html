@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TrustBridge Portal | Delivery &amp; Disbursement Monitor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d8e3fa",
+                        "primary": "#003874",
+                        "primary-fixed-dim": "#aac7ff",
+                        "tertiary-fixed-dim": "#ffb599",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "on-primary-container": "#a3c3ff",
+                        "surface-dim": "#cfdaf1",
+                        "outline": "#737782",
+                        "on-tertiary-container": "#ffaf90",
+                        "secondary-fixed": "#7cf7de",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#370e00",
+                        "surface-container-high": "#dee8ff",
+                        "primary-container": "#1a4f95",
+                        "secondary": "#006b5c",
+                        "tertiary": "#682200",
+                        "inverse-on-surface": "#ebf1ff",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#08458b",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#424751",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#8e3100",
+                        "secondary-fixed-dim": "#5ddbc2",
+                        "inverse-surface": "#263142",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#111c2c",
+                        "on-secondary-fixed": "#00201b",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c3c6d2",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#005045",
+                        "surface": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#aac7ff",
+                        "surface-container-low": "#f0f3ff",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111c2c",
+                        "secondary-container": "#79f4db",
+                        "surface-tint": "#2e5ea5",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#007060",
+                        "surface-container-highest": "#d8e3fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "2rem",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1440px",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "label-mono": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        .zebra-stripes tr:nth-child(even) {
+            background-color: #f0f3ff;
+        }
+        .connectivity-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-background font-body-md text-on-surface">
+<!-- Connectivity Indicator -->
+<div class="fixed top-2 right-4 z-[100] flex items-center gap-2 bg-surface px-3 py-1 rounded-full border border-outline-variant shadow-sm transition-all hover:shadow-md">
+<span class="w-2 h-2 rounded-full bg-secondary connectivity-pulse"></span>
+<span class="text-label-mono font-label-mono text-secondary text-xs uppercase tracking-wider">Online - Sync Active</span>
+</div>
+<div class="flex h-screen overflow-hidden">
+<!-- Side Navigation Bar (Desktop) -->
+<aside class="hidden md:flex flex-col h-screen w-64 left-0 bg-surface-container border-r border-outline-variant p-stack-md space-y-stack-sm shrink-0">
+<div class="flex items-center gap-3 px-2 py-4 mb-6">
+<img alt="TrustBridge Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLvGfSr7U9D8ihJYmKjExmaj5cdAJ1O05ICyu-xIML7gZN-j_Xde3LUJpKsfDTmCBJa1-Q7qQnYozN08maCwDTeaKfs6elRJ4_K90i6Toj02Zw515qInm7UULwa-P1I7j6lyph7vhUmuNQg0HUf2iLMZ28NcQqNv35rgv6SVVWsK5NUPgcieA8H47ServJC8a_r7TbuDN9oMKWprdYYNIcShePjShR6LYDQmwe_XikZPcNgAb6_Sc880N3A"/>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary leading-none">SAPCONE</h1>
+<p class="text-[10px] uppercase font-bold tracking-[0.1em] text-outline mt-1">Portal Oversight</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined filled">dashboard</span>
+<span class="text-body-md font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="text-body-md font-body-md">Programmes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-body-md font-body-md">Beneficiaries</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span class="text-body-md font-body-md">Deliveries</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all relative" href="#">
+<span class="material-symbols-outlined">report_problem</span>
+<span class="text-body-md font-body-md">Fraud Alerts</span>
+<span class="absolute right-4 top-1/2 -translate-y-1/2 bg-error text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">3</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span class="text-body-md font-body-md">Audit Logs</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-outline-variant space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-body-md font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined">help_outline</span>
+<span class="text-body-md font-body-md">Support</span>
+</a>
+</div>
+<div class="mt-6">
+<button class="w-full bg-primary text-white font-bold py-4 px-4 rounded-xl flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 duration-150 transition-all shadow-md">
+<span class="material-symbols-outlined">check_circle</span>
+                    Approve Batch
+                </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-y-auto bg-background">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-40 bg-surface border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile md:px-gutter h-16 shrink-0">
+<div class="flex items-center gap-3">
+<img alt="TrustBridge Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AP1WRLvGfSr7U9D8ihJYmKjExmaj5cdAJ1O05ICyu-xIML7gZN-j_Xde3LUJpKsfDTmCBJa1-Q7qQnYozN08maCwDTeaKfs6elRJ4_K90i6Toj02Zw515qInm7UULwa-P1I7j6lyph7vhUmuNQg0HUf2iLMZ28NcQqNv35rgv6SVVWsK5NUPgcieA8H47ServJC8a_r7TbuDN9oMKWprdYYNIcShePjShR6LYDQmwe_XikZPcNgAb6_Sc880N3A"/>
+<h2 class="hidden sm:block text-headline-md font-headline-md font-bold text-primary tracking-tight">TrustBridge</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<div class="flex items-center gap-2 bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-outline text-lg">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm font-body-md w-64 placeholder:text-outline-variant" placeholder="Search batches or beneficiaries..." type="text"/>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-label-mono font-label-mono text-primary text-xs leading-none">ADMINISTRATOR</p>
+<p class="text-label-mono font-label-mono text-[10px] text-outline mt-1 uppercase">ID: 489-TX-02</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-sm">JS</div>
+</div>
+</div>
+<div class="md:hidden">
+<button class="p-2 text-primary hover:bg-surface-variant rounded-full">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-4 md:p-gutter space-y-stack-lg max-w-container-max mx-auto w-full">
+<!-- Page Header & Key Stats -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-4 flex flex-col md:flex-row md:items-end justify-between gap-4 mb-2">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary">Disbursement Oversight</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Monitoring last-mile delivery across Turkana West programmes.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-6 py-2.5 border border-primary text-primary font-bold rounded-full hover:bg-surface-container-high transition-colors text-sm">Export Audit Reports</button>
+<button class="px-6 py-2.5 bg-primary text-white font-bold rounded-full hover:opacity-90 transition-all text-sm shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">add</span> New Programme
+                             </button>
+</div>
+</div>
+<!-- Stat Cards -->
+<div class="bg-white border border-outline-variant p-4 rounded-xl flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 text-primary opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-xs uppercase font-bold">Total Disbursed</span>
+<div class="mt-2">
+<span class="text-headline-md font-headline-md text-primary">$1.42M</span>
+<span class="text-[10px] font-bold text-secondary ml-2">↑ 12% MoM</span>
+</div>
+</div>
+<div class="bg-white border border-outline-variant p-4 rounded-xl flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 text-primary opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-xs uppercase font-bold">Active Recipients</span>
+<div class="mt-2">
+<span class="text-headline-md font-headline-md text-primary">12,840</span>
+<span class="text-[10px] font-bold text-outline ml-2">Across 4 zones</span>
+</div>
+</div>
+<div class="bg-white border border-outline-variant p-4 rounded-xl flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 text-secondary opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-xs uppercase font-bold">Success Rate</span>
+<div class="mt-2">
+<span class="text-headline-md font-headline-md text-secondary">99.2%</span>
+<span class="text-[10px] font-bold text-secondary ml-2">Secure Link</span>
+</div>
+</div>
+<div class="bg-white border border-outline-variant p-4 rounded-xl flex flex-col justify-between h-32 relative overflow-hidden group">
+<div class="absolute -right-4 -top-4 text-tertiary opacity-5 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<span class="text-label-mono font-label-mono text-outline text-xs uppercase font-bold">Flagged Events</span>
+<div class="mt-2">
+<span class="text-headline-md font-headline-md text-tertiary">03</span>
+<span class="text-[10px] font-bold text-tertiary ml-2 italic">Requires Review</span>
+</div>
+</div>
+</section>
+<!-- Main Layout Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-stack-lg">
+<!-- Left: Disbursement Batches Monitor -->
+<div class="lg:col-span-2 space-y-stack-md">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-md font-headline-md text-primary">Disbursement Batches</h3>
+<div class="flex gap-2">
+<button class="p-2 bg-surface-container-high rounded-lg hover:bg-surface-variant"><span class="material-symbols-outlined text-lg">filter_list</span></button>
+<button class="p-2 bg-surface-container-high rounded-lg hover:bg-surface-variant"><span class="material-symbols-outlined text-lg">refresh</span></button>
+</div>
+</div>
+<!-- High Density Batch List -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left zebra-stripes">
+<thead class="bg-surface-container-low border-b border-outline-variant">
+<tr>
+<th class="px-6 py-4 text-label-mono font-label-mono text-xs text-outline uppercase">Batch ID</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-xs text-outline uppercase">Programme</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-xs text-outline uppercase">Recipients</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-xs text-outline uppercase">Amount</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-xs text-outline uppercase">Status</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-xs text-outline uppercase">Action</th>
+</tr>
+</thead>
+<tbody class="text-body-md">
+<!-- Batch Row 1 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 font-bold text-primary">#BCH-8821</td>
+<td class="px-6 py-5">Emergency Cash - Kalobeyei</td>
+<td class="px-6 py-5">2,450</td>
+<td class="px-6 py-5 font-bold">$122,500</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-tertiary-fixed-dim/20 text-tertiary-container rounded-full text-xs font-bold border border-tertiary-fixed-dim/40 uppercase tracking-tighter">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Pending Approval
+                                            </span>
+</td>
+<td class="px-6 py-5">
+<button class="bg-primary text-white text-[10px] font-bold px-4 py-1.5 rounded-full hover:opacity-90 active:scale-95 transition-all uppercase">Approve</button>
+</td>
+</tr>
+<!-- Batch Row 2 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 font-bold text-primary">#BCH-8799</td>
+<td class="px-6 py-5">Maternal Nutrition Support</td>
+<td class="px-6 py-5">820</td>
+<td class="px-6 py-5 font-bold">$41,000</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-secondary-container/30 text-secondary rounded-full text-xs font-bold border border-secondary/20 uppercase tracking-tighter">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Active
+                                            </span>
+</td>
+<td class="px-6 py-5">
+<button class="bg-surface-container-high text-primary text-[10px] font-bold px-4 py-1.5 rounded-full hover:bg-surface-variant transition-all uppercase">Monitor</button>
+</td>
+</tr>
+<!-- Batch Row 3 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 font-bold text-primary">#BCH-8744</td>
+<td class="px-6 py-5">Livestock Drought Relief</td>
+<td class="px-6 py-5">1,100</td>
+<td class="px-6 py-5 font-bold">$55,000</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-outline-variant/20 text-outline rounded-full text-xs font-bold border border-outline-variant/40 uppercase tracking-tighter">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Completed
+                                            </span>
+</td>
+<td class="px-6 py-5">
+<button class="bg-surface-container-high text-primary text-[10px] font-bold px-4 py-1.5 rounded-full hover:bg-surface-variant transition-all uppercase">View Audit</button>
+</td>
+</tr>
+<!-- Batch Row 4 -->
+<tr class="hover:bg-surface-container-low/50 transition-colors">
+<td class="px-6 py-5 font-bold text-primary">#BCH-8902</td>
+<td class="px-6 py-5">General Food Dist. - Zone 1</td>
+<td class="px-6 py-5">4,200</td>
+<td class="px-6 py-5 font-bold">$210,000</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold border border-outline-variant/20 uppercase tracking-tighter">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span> Draft
+                                            </span>
+</td>
+<td class="px-6 py-5">
+<button class="bg-surface-container-high text-primary text-[10px] font-bold px-4 py-1.5 rounded-full hover:bg-surface-variant transition-all uppercase">Edit</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Live Feed Card -->
+<div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<div class="p-4 bg-primary text-white flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">bolt</span>
+<h4 class="font-bold text-sm uppercase tracking-wider">Live Delivery Evidence Feed</h4>
+</div>
+<span class="text-[10px] font-label-mono opacity-80">Synced with Stellar Anchor</span>
+</div>
+<div class="divide-y divide-outline-variant max-h-64 overflow-y-auto">
+<div class="p-4 flex items-center justify-between bg-secondary-container/5">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div>
+<p class="text-sm font-bold text-primary">Beneficiary ID: ***921A Approved</p>
+<p class="text-xs text-outline">PIN Verified | Location: 3.51° N, 34.86° E</p>
+</div>
+</div>
+<span class="text-xs font-label-mono text-outline">2m ago</span>
+</div>
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div>
+<p class="text-sm font-bold text-primary">Beneficiary ID: ***044B Approved</p>
+<p class="text-xs text-outline">Representative Pickup | QR Scanned</p>
+</div>
+</div>
+<span class="text-xs font-label-mono text-outline">5m ago</span>
+</div>
+<div class="p-4 flex items-center justify-between bg-error-container/10">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-error"></div>
+<div>
+<p class="text-sm font-bold text-error">Security Event: ***112C PIN Failed</p>
+<p class="text-xs text-error/80">3/3 Attempts Exhausted | Flagged for Review</p>
+</div>
+</div>
+<span class="text-xs font-label-mono text-error">8m ago</span>
+</div>
+<div class="p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<div>
+<p class="text-sm font-bold text-primary">Beneficiary ID: ***773K Approved</p>
+<p class="text-xs text-outline">Offline Sync Completed | Signature Captured</p>
+</div>
+</div>
+<span class="text-xs font-label-mono text-outline">12m ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Map & Workflow Insights -->
+<div class="space-y-stack-md">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-md font-headline-md text-primary">Operations Map</h3>
+<span class="text-[10px] font-bold text-outline uppercase tracking-widest">Real-Time</span>
+</div>
+<!-- Map Visual Placeholder -->
+<div class="bg-surface-container-highest border border-outline-variant rounded-xl aspect-[4/5] relative overflow-hidden shadow-inner group">
+<img class="w-full h-full object-cover" data-alt="A sophisticated satellite map view of a humanitarian region in Northern Kenya, showing Turkana West. Overlayed with a clean, professional UI grid and glowing teal nodes indicating active aid distribution points. A few nodes are pulsating in red for alerts. The lighting is crisp, daylight, with a modern digital overlay aesthetic and minimalist labels." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkiH3L_A9pgamvN64hIiKUozLWTvRcjeuqaVbk6DjbbvcEJGCix4bLloXgVDvQTU2kNOtdzRqXm9JQtoYR-ngtAX5ADzE2Isj4F29IVvRi9YaDFn1LEh6PN_nLGOmG_ylNC1KbCc0MGmRP15-99O1ADdmo5JaCiATSoozjqhQ4NYNud3z2jUUqQmy1BfKhEmvKoXB6GpKRREYTsC_hREc-ZHRi_4KDuHP1gdw0f9rlY-iKnLMg7W20"/>
+<div class="absolute inset-0 bg-primary/10 pointer-events-none"></div>
+<!-- Map HUD -->
+<div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md p-3 rounded-lg border border-outline-variant shadow-lg max-w-[160px]">
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Distribution Active</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Queueing Offline</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Incident Area</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-3 rounded-lg border border-outline-variant shadow-lg flex items-center justify-between">
+<div>
+<p class="text-[10px] font-bold text-outline uppercase">Active Field Staff</p>
+<p class="text-sm font-bold text-primary">42 Registered</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-outline uppercase">Sync Rate</p>
+<p class="text-sm font-bold text-secondary">94% Stable</p>
+</div>
+</div>
+</div>
+<!-- Quick Process View (based on the user flow flowchart) -->
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 space-y-4">
+<h4 class="text-label-mono font-label-mono text-primary text-xs uppercase font-bold tracking-widest">Workflow Integrity</h4>
+<div class="space-y-3">
+<div class="flex items-start gap-3">
+<div class="bg-primary-container p-1 rounded">
+<span class="material-symbols-outlined text-white text-base">person_add</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface leading-tight">Biometric Registration</p>
+<p class="text-[10px] text-outline">Offline capture with PIN generation</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="bg-primary-container p-1 rounded">
+<span class="material-symbols-outlined text-white text-base">sync</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface leading-tight">Cloud Reconciliation</p>
+<p class="text-[10px] text-outline">Deduplication and fraud analysis</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="bg-primary-container p-1 rounded">
+<span class="material-symbols-outlined text-white text-base">key</span>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface leading-tight">PIN-Verified Release</p>
+<p class="text-[10px] text-outline">Tamper-evident Stellar anchoring</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-2 py-3 bg-white border border-primary text-primary text-[10px] font-bold rounded-lg uppercase tracking-wider hover:bg-primary hover:text-white transition-all">
+                                View Full Protocol
+                            </button>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Spacing -->
+<footer class="h-12 w-full mt-auto"></footer>
+</main>
+</div>
+<!-- Bottom Nav Bar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center h-20 bg-surface/90 backdrop-blur-md border-t border-outline-variant z-50 pb-safe shadow-lg px-2">
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1 scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined filled">home</span>
+<span class="text-label-sm font-body-md text-[10px]">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined">person_add</span>
+<span class="text-label-sm font-body-md text-[10px]">Register</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-label-sm font-body-md text-[10px]">Deliveries</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1" href="#">
+<span class="material-symbols-outlined">sync</span>
+<span class="text-label-sm font-body-md text-[10px]">Sync</span>
+</a>
+</nav>
+<script>
+        // Simple interactive micro-interaction for the "Approve" buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Simulating live feed updates
+        setInterval(() => {
+            const feed = document.querySelector('.divide-y');
+            if (feed) {
+                const items = feed.children;
+                if (items.length > 0) {
+                    const first = items[0];
+                    first.classList.add('transition-all', 'bg-secondary-container/20');
+                    setTimeout(() => first.classList.remove('bg-secondary-container/20'), 1000);
+                }
+            }
+        }, 8000);
+    </script>
+</body></html>

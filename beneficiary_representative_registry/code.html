@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TrustBridge Portal - Beneficiary Registry</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#d8e3fa",
+                        "primary": "#003874",
+                        "primary-fixed-dim": "#aac7ff",
+                        "tertiary-fixed-dim": "#ffb599",
+                        "on-tertiary-fixed-variant": "#7f2b00",
+                        "on-primary-container": "#a3c3ff",
+                        "surface-dim": "#cfdaf1",
+                        "outline": "#737782",
+                        "on-tertiary-container": "#ffaf90",
+                        "secondary-fixed": "#7cf7de",
+                        "tertiary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#370e00",
+                        "surface-container-high": "#dee8ff",
+                        "primary-container": "#1a4f95",
+                        "secondary": "#006b5c",
+                        "tertiary": "#682200",
+                        "inverse-on-surface": "#ebf1ff",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#08458b",
+                        "on-error": "#ffffff",
+                        "surface-container": "#e7eeff",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#424751",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#8e3100",
+                        "secondary-fixed-dim": "#5ddbc2",
+                        "inverse-surface": "#263142",
+                        "on-primary-fixed": "#001b3e",
+                        "on-surface": "#111c2c",
+                        "on-secondary-fixed": "#00201b",
+                        "on-tertiary": "#ffffff",
+                        "outline-variant": "#c3c6d2",
+                        "surface-bright": "#f9f9ff",
+                        "on-secondary-fixed-variant": "#005045",
+                        "surface": "#f9f9ff",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#aac7ff",
+                        "surface-container-low": "#f0f3ff",
+                        "on-error-container": "#93000a",
+                        "primary-fixed": "#d6e3ff",
+                        "on-background": "#111c2c",
+                        "secondary-container": "#79f4db",
+                        "surface-tint": "#2e5ea5",
+                        "on-primary": "#ffffff",
+                        "on-secondary-container": "#007060",
+                        "surface-container-highest": "#d8e3fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "stack-lg": "2rem",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "stack-sm": "0.5rem",
+                        "container-max": "1440px",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Manrope"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Manrope"],
+                        "label-mono": ["JetBrains Mono"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-mono": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .zebra-stripe:nth-child(even) { background-color: #f0f3ff; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c3c6d2; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary-container">
+<div class="flex h-screen overflow-hidden">
+<!-- SideNavBar Component -->
+<aside class="bg-surface-container dark:bg-inverse-surface border-r border-outline-variant dark:border-outline h-screen w-64 hidden md:flex flex-col p-stack-md space-y-stack-sm flex-shrink-0">
+<div class="flex items-center gap-3 px-2 py-4 mb-4">
+<img alt="TrustBridge Logo" class="w-10 h-10 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4qvazOKqknrlOXokb53n1pm1zsefSITMbgdXDMbkt9dkgLyD6xnEm_Gzn6rMnv4WNVZTPluj_W4PtmH11fA-qlvoK_XzvDQUqO-bYZG_6jK10SU0gI7ubz5Q-hbleSiA2Ctlh8PuGdjw0vP48B0EH6quQuu3TF08QbI1VzUWbRQar2VPnD2PtjB2GgRWfpwWG59Vj7gJBaD_WDtPfJKjGBUh5gkqxvvfEN5K_5RCWLutFM3ZzLIEe"/>
+<div>
+<h2 class="text-headline-md font-headline-md font-bold text-primary">SAPCONE</h2>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Portal Oversight</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-body-md text-body-md">Programmes</span>
+</a>
+<!-- Active Tab: Beneficiaries -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-xl active:opacity-80 duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="font-body-md text-body-md">Beneficiaries</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span class="font-body-md text-body-md">Deliveries</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="report_problem">report_problem</span>
+<span class="font-body-md text-body-md">Fraud Alerts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span class="font-body-md text-body-md">Audit Logs</span>
+</a>
+</nav>
+<button class="w-full bg-primary text-on-primary font-bold py-3 rounded-xl hover:opacity-90 transition-opacity mb-4">
+                Approve Batch
+            </button>
+<div class="border-t border-outline-variant pt-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant dark:text-surface-variant hover:bg-surface-variant rounded-xl transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span class="text-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline flex justify-between items-center w-full px-margin-mobile md:px-gutter h-16 flex-shrink-0 z-10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim" data-icon="account_balance">account_balance</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">TrustBridge</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center gap-2 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full">
+<span class="material-symbols-outlined text-[18px]" data-icon="wifi">wifi</span>
+<span class="text-label-mono font-label-mono">Online</span>
+</div>
+<div class="flex items-center gap-3 border-l border-outline-variant pl-6">
+<div class="text-right hidden sm:block">
+<p class="text-body-md font-bold text-on-surface">Admin User</p>
+<p class="text-[10px] text-on-surface-variant">Regional Director</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold overflow-hidden border-2 border-primary/10">
+<img class="w-full h-full object-cover" data-alt="Professional corporate headshot of a middle-aged administrative professional with a friendly expression, wearing a navy blue business suit, photographed against a neutral grey studio background with soft directional lighting to emphasize trust and reliability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDooJDl6W_qZx9m_HFJoF1u7cx3CrnCIDrEiRHTP9DqDvz4v-UVmfNGU1ETgYFoPp5XgvDUrVfmJ4BWza6-lEEo7_8FB8Mp-c8mjiHAYZdc7M-CphSnKCMkWAmws706DK53JeauRz8k14AM1BVKXPH3P7PDo11e-4ixWtmHQ0X6i1yqgUwNfgbHQ5-Z9dIbAGuKAEy9MxtDQ6GT-yws7Vq7pdIHyGS4YfPjX2errn4XK5vPVWA6MdM-"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-4 md:p-stack-lg custom-scrollbar">
+<!-- Dashboard Header -->
+<div class="max-w-container-max mx-auto mb-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Beneficiary Registry</h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant">Oversight and management of verified last-mile aid recipients.</p>
+</div>
+<div class="flex gap-2">
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant rounded-xl hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="file_download">file_download</span>
+<span class="font-bold text-body-md">Export Audit</span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-xl hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+<span class="font-bold text-body-md">Manual Entry</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Stats Overview Bento -->
+<div class="max-w-container-max mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+<div class="glass-panel p-6 rounded-xl flex flex-col justify-between">
+<span class="text-on-surface-variant font-label-mono text-label-mono">TOTAL REGISTERED</span>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-headline-lg font-headline-lg">12,482</span>
+<span class="text-secondary text-sm font-bold flex items-center"><span class="material-symbols-outlined text-sm" data-icon="trending_up">trending_up</span> 4%</span>
+</div>
+</div>
+<div class="glass-panel p-6 rounded-xl border-l-4 border-l-secondary">
+<span class="text-on-surface-variant font-label-mono text-label-mono">VERIFIED BY REGISTRAR</span>
+<div class="mt-2 text-headline-lg font-headline-lg text-secondary">98.2%</div>
+</div>
+<div class="glass-panel p-6 rounded-xl">
+<span class="text-on-surface-variant font-label-mono text-label-mono">ACTIVE PROXIES</span>
+<div class="mt-2 text-headline-lg font-headline-lg text-on-surface">3,120</div>
+</div>
+<div class="glass-panel p-6 rounded-xl border-l-4 border-l-error">
+<span class="text-on-surface-variant font-label-mono text-label-mono">PENDING ALERTS</span>
+<div class="mt-2 text-headline-lg font-headline-lg text-error">14</div>
+</div>
+</div>
+<!-- Main Table Section -->
+<div class="max-w-container-max mx-auto glass-panel rounded-xl overflow-hidden shadow-sm">
+<!-- Table Toolbar -->
+<div class="p-4 border-b border-outline-variant flex flex-wrap gap-4 items-center justify-between">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-xl focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-body-md" placeholder="Search by ID, Name, or Proxy..." type="text"/>
+</div>
+<div class="flex gap-2">
+<div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-xl text-on-surface-variant text-sm font-bold cursor-pointer hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="filter_list">filter_list</span>
+                                Regions: Turkana
+                            </div>
+<div class="flex items-center gap-2 px-3 py-2 bg-surface-container rounded-xl text-on-surface-variant text-sm font-bold cursor-pointer hover:bg-surface-variant transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="verified">verified</span>
+                                Status: All
+                            </div>
+</div>
+</div>
+<!-- Table Wrapper -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant">
+<th class="px-6 py-4 text-label-mono font-label-mono text-on-surface-variant">REFERENCE ID</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-on-surface-variant">BENEFICIARY</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-on-surface-variant">LINKED PROXY</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-on-surface-variant">REGION</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-on-surface-variant">STATUS</th>
+<th class="px-6 py-4 text-label-mono font-label-mono text-on-surface-variant">STALLAR HASH</th>
+<th class="px-6 py-4 text-right"></th>
+</tr>
+</thead>
+<tbody>
+<!-- Row 1 -->
+<tr class="zebra-stripe hover:bg-primary-container/10 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-label-mono text-primary font-bold">TB-392819</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center font-bold text-xs">AM</div>
+<div>
+<div class="font-bold text-on-surface">Amina Mohamed</div>
+<div class="text-xs text-on-surface-variant">+254 701 *** 882</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">None (Self)</td>
+<td class="px-6 py-4 text-on-surface-variant">Lodwar West</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20">Verified</span>
+</td>
+<td class="px-6 py-4 font-label-mono text-[10px] text-outline truncate max-w-[120px]">0x72a...f92b</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="zebra-stripe hover:bg-primary-container/10 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-label-mono text-primary font-bold">TB-392824</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center font-bold text-xs">EK</div>
+<div>
+<div class="font-bold text-on-surface">Ezekiel Kemboi</div>
+<div class="text-xs text-on-surface-variant">+254 712 *** 331</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">John Lopeyok</td>
+<td class="px-6 py-4 text-on-surface-variant">Kakuma Sub-County</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20">Verified</span>
+</td>
+<td class="px-6 py-4 font-label-mono text-[10px] text-outline truncate max-w-[120px]">0x31b...a881</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 (Alert State) -->
+<tr class="zebra-stripe hover:bg-error-container/10 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-label-mono text-primary font-bold">TB-392830</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-error-container/20 flex items-center justify-center font-bold text-xs text-error">ST</div>
+<div>
+<div class="font-bold text-on-surface">Sarah Teresia</div>
+<div class="text-xs text-on-surface-variant">No Phone (Legacy ID)</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Unknown</td>
+<td class="px-6 py-4 text-on-surface-variant">Kalobeyei Settlement</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-tertiary-container/10 text-tertiary border border-tertiary-container/20 flex items-center gap-1 w-fit">
+<span class="material-symbols-outlined text-[14px]" data-icon="priority_high">priority_high</span> 
+                                            Flagged
+                                        </span>
+</td>
+<td class="px-6 py-4 font-label-mono text-[10px] text-outline italic">Pending Hash...</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="zebra-stripe hover:bg-primary-container/10 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-label-mono text-primary font-bold">TB-392835</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center font-bold text-xs">JN</div>
+<div>
+<div class="font-bold text-on-surface">James Nderitu</div>
+<div class="text-xs text-on-surface-variant">+254 722 *** 119</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">Alice Njoki (Spouse)</td>
+<td class="px-6 py-4 text-on-surface-variant">Lodwar Central</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-outline-variant/30 text-on-surface-variant border border-outline-variant">Pending SMS</span>
+</td>
+<td class="px-6 py-4 font-label-mono text-[10px] text-outline truncate max-w-[120px]">0x99c...c340</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="zebra-stripe hover:bg-primary-container/10 transition-colors cursor-pointer group">
+<td class="px-6 py-4 font-label-mono text-primary font-bold">TB-392842</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant flex items-center justify-center font-bold text-xs">PK</div>
+<div>
+<div class="font-bold text-on-surface">Purity Kinya</div>
+<div class="text-xs text-on-surface-variant">+254 755 *** 002</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-on-surface-variant">None (Self)</td>
+<td class="px-6 py-4 text-on-surface-variant">Kibish Frontier</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full text-xs font-bold bg-secondary/10 text-secondary border border-secondary/20">Verified</span>
+</td>
+<td class="px-6 py-4 font-label-mono text-[10px] text-outline truncate max-w-[120px]">0x11e...d772</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-outline-variant flex items-center justify-between text-body-md">
+<span class="text-on-surface-variant">Showing 1 to 10 of 12,482 beneficiaries</span>
+<div class="flex gap-1">
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined" data-icon="keyboard_arrow_left">keyboard_arrow_left</span>
+</button>
+<button class="px-3 py-1 rounded bg-primary text-on-primary font-bold">1</button>
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">2</button>
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">3</button>
+<span class="px-2">...</span>
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">1249</button>
+<button class="px-3 py-1 rounded border border-outline-variant hover:bg-surface-container">
+<span class="material-symbols-outlined" data-icon="keyboard_arrow_right">keyboard_arrow_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Mobile Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-20 pb-safe px-2 bg-surface dark:bg-inverse-surface border-t border-outline-variant dark:border-outline backdrop-blur-md shadow-lg md:hidden z-50 rounded-t-full">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 active:bg-surface-variant transition-transform active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-sm font-body-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 active:bg-surface-variant transition-transform active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person_add">person_add</span>
+<span class="text-label-sm font-body-md">Register</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-6 py-1 transition-transform active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-label-sm font-body-md">Registry</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-surface-variant px-4 py-1 active:bg-surface-variant transition-transform active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="sync">sync</span>
+<span class="text-label-sm font-body-md">Sync</span>
+</a>
+</nav>
+</main>
+</div>
+<!-- Floating Action Button (Only on Dashboard context - suppressed here as per logic for details screens, but kept as a general entry for registry) -->
+<!-- Determined it's useful for 'Registry' main view -->
+<button class="fixed bottom-24 right-6 md:bottom-8 md:right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-20 group">
+<span class="material-symbols-outlined text-[32px]" data-icon="add">add</span>
+<span class="absolute right-16 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Register New</span>
+</button>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // In a real app, this would navigate to the beneficiary details
+                const id = row.cells[0].innerText;
+                console.log(`Opening record: ${id}`);
+            });
+        });
+    </script>
+</body></html>
