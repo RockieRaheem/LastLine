@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { AdminShell } from "@/components/layout/admin-shell";
 import { AidFlowStrip } from "@/components/aid-flow-strip";
 import type { MobileNavItem } from "@/components/layout/mobile-bottom-nav";
@@ -129,6 +132,24 @@ const TX_STATUS_ICON: Record<TxStatus, string> = {
 };
 
 export default function ProgramDashboardPage() {
+  const [dismissed, setDismissed] = useState<string[]>([]);
+  const [showFlaggedOnly, setShowFlaggedOnly] = useState(false);
+  const [exported, setExported] = useState(false);
+
+  const visibleAlerts = ALERTS.filter((a) => !dismissed.includes(a.title));
+  const visibleTransactions = showFlaggedOnly
+    ? TRANSACTIONS.filter((t) => t.status !== "Verified")
+    : TRANSACTIONS;
+
+  function dismissAlert(title: string) {
+    setDismissed((prev) => [...prev, title]);
+  }
+
+  function handleExport() {
+    setExported(true);
+    setTimeout(() => setExported(false), 1800);
+  }
+
   return (
     <AdminShell
       active="dashboard"
@@ -229,19 +250,40 @@ export default function ProgramDashboardPage() {
 
           {/* Actionable Alerts Column */}
           <div className="card-surface rounded-2xl p-6 flex flex-col h-[400px]">
-            <h4 className="text-body-lg font-headline-md text-on-surface mb-4">Actionable Alerts</h4>
+            <div className="flex items-center justify-between mb-4">
+              <h4 className="text-body-lg font-headline-md text-on-surface">Actionable Alerts</h4>
+              {visibleAlerts.length > 0 && (
+                <span className="text-[10px] font-bold text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-full">
+                  {visibleAlerts.length} open
+                </span>
+              )}
+            </div>
             <div className="flex-1 overflow-y-auto space-y-3 custom-scrollbar pr-2">
-              {ALERTS.map((alert) => (
+              {visibleAlerts.length === 0 && (
+                <div className="h-full flex flex-col items-center justify-center text-center gap-2 text-on-surface-variant">
+                  <span className="material-symbols-outlined text-[32px] text-secondary">task_alt</span>
+                  <p className="text-sm font-bold text-on-surface">All clear</p>
+                  <p className="text-xs">No alerts need attention right now.</p>
+                </div>
+              )}
+              {visibleAlerts.map((alert) => (
                 <div
                   key={alert.title}
-                  className={`p-3.5 rounded-xl flex gap-3 items-start border ${
+                  className={`relative p-3.5 rounded-xl flex gap-3 items-start border ${
                     alert.tone === "error"
                       ? "bg-error-container/20 border-error/20"
                       : alert.tone === "primary"
-                        ? "bg-primary-container/10 border-primary/20"
+                        ? "bg-primary-container/40 border-primary/20"
                         : "bg-surface-container border-outline-variant"
                   }`}
                 >
+                  <button
+                    onClick={() => dismissAlert(alert.title)}
+                    aria-label="Dismiss alert"
+                    className="focus-ring absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-on-surface-variant hover:bg-black/5"
+                  >
+                    <span className="material-symbols-outlined text-[14px]">close</span>
+                  </button>
                   <div
                     className={`w-8 h-8 shrink-0 rounded-lg flex items-center justify-center ${
                       alert.tone === "error"
@@ -253,7 +295,7 @@ export default function ProgramDashboardPage() {
                   >
                     <span className="material-symbols-outlined text-[16px]">{alert.icon}</span>
                   </div>
-                  <div>
+                  <div className="pr-4">
                     <p
                       className={`text-sm font-bold ${
                         alert.tone === "error" ? "text-error" : alert.tone === "primary" ? "text-primary" : "text-on-surface"
@@ -267,12 +309,13 @@ export default function ProgramDashboardPage() {
                         {alert.actions.map((action, i) => (
                           <button
                             key={action}
+                            onClick={() => dismissAlert(alert.title)}
                             className={
                               i === 0
                                 ? alert.tone === "error"
-                                  ? "px-3 py-1 bg-error text-white text-[10px] font-bold rounded-full uppercase"
-                                  : "px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full uppercase"
-                                : "px-3 py-1 bg-surface border border-outline-variant text-[10px] font-bold rounded-full uppercase"
+                                  ? "focus-ring px-3 py-1 bg-error text-white text-[10px] font-bold rounded-full uppercase hover:brightness-110"
+                                  : "focus-ring px-3 py-1 bg-primary text-white text-[10px] font-bold rounded-full uppercase hover:brightness-110"
+                                : "focus-ring px-3 py-1 bg-surface border border-outline-variant text-[10px] font-bold rounded-full uppercase hover:bg-surface-container"
                             }
                           >
                             {action}
@@ -295,11 +338,24 @@ export default function ProgramDashboardPage() {
               <p className="text-xs text-on-surface-variant mt-0.5">Anchored on Stellar, paid out via off-ramp partners</p>
             </div>
             <div className="flex gap-2">
-              <button className="flex items-center gap-1 px-3 py-1.5 text-label-mono text-xs border border-outline-variant rounded-full hover:bg-surface-container transition-colors">
-                <span className="material-symbols-outlined text-sm">filter_list</span> Filter
+              <button
+                onClick={() => setShowFlaggedOnly((v) => !v)}
+                className={`focus-ring flex items-center gap-1 px-3 py-1.5 text-label-mono text-xs border rounded-full transition-colors ${
+                  showFlaggedOnly
+                    ? "bg-primary text-white border-primary"
+                    : "border-outline-variant hover:bg-surface-container"
+                }`}
+              >
+                <span className="material-symbols-outlined text-sm">filter_list</span>
+                {showFlaggedOnly ? "Needs Attention" : "Filter"}
               </button>
-              <button className="flex items-center gap-1 px-3 py-1.5 text-label-mono text-xs border border-outline-variant rounded-full hover:bg-surface-container transition-colors">
-                <span className="material-symbols-outlined text-sm">download</span> Export
+              <button
+                onClick={handleExport}
+                className="focus-ring flex items-center gap-1 px-3 py-1.5 text-label-mono text-xs border border-outline-variant rounded-full hover:bg-surface-container transition-colors disabled:opacity-60"
+                disabled={exported}
+              >
+                <span className="material-symbols-outlined text-sm">{exported ? "check" : "download"}</span>
+                {exported ? "Exported" : "Export"}
               </button>
             </div>
           </div>
@@ -317,7 +373,14 @@ export default function ProgramDashboardPage() {
                 </tr>
               </thead>
               <tbody className="text-sm divide-y divide-outline-variant/30">
-                {TRANSACTIONS.map((tx) => (
+                {visibleTransactions.length === 0 && (
+                  <tr>
+                    <td colSpan={7} className="px-6 py-10 text-center text-on-surface-variant text-sm">
+                      No transactions need attention right now.
+                    </td>
+                  </tr>
+                )}
+                {visibleTransactions.map((tx) => (
                   <tr key={tx.hash} className="hover:bg-surface-container-low transition-colors cursor-pointer">
                     <td className="px-6 py-4 font-label-mono text-xs text-primary">{tx.hash}</td>
                     <td className="px-6 py-4 font-bold">{tx.beneficiary}</td>
