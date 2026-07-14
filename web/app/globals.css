@@ -122,6 +122,10 @@ body {
   background-color: #f0f3ff;
 }
 
+.zebra-stripes tr:nth-child(even) {
+  background-color: #f0f3ff;
+}
+
 .glass-panel {
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(12px);

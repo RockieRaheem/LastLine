@@ -31,6 +31,11 @@ export function Sidebar({ active }: { active: NavKey }) {
                 {item.icon}
               </span>
               <span className="font-body-md text-body-md">{item.label}</span>
+              {item.badge ? (
+                <span className="ml-auto bg-error text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                  {item.badge}
+                </span>
+              ) : null}
             </Link>
           );
         })}
