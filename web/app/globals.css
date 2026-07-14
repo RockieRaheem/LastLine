@@ -140,3 +140,27 @@ body {
   background: #c3c6d2;
   border-radius: 10px;
 }
+
+.pin-box:focus-within {
+  border-color: #003874;
+  box-shadow: 0 0 0 2px rgba(0, 56, 116, 0.1);
+}
+
+@keyframes success-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-anim {
+  animation: success-pulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
