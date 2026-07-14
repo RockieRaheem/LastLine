@@ -196,3 +196,76 @@ body {
 .fraud-pulse {
   animation: pulse-border 2s infinite ease-in-out;
 }
+
+/* --- Elevated visual language ------------------------------------------ */
+
+.mesh-bg {
+  background-color: #f9f9ff;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(26, 79, 149, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(0, 107, 92, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(214, 227, 255, 0.5) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(216, 227, 250, 0.6) 0px, transparent 50%);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #003874 0%, #0a4a92 45%, #08624f 100%);
+}
+
+.card-surface {
+  background: #ffffff;
+  border: 1px solid rgba(195, 198, 210, 0.5);
+  box-shadow:
+    0 1px 2px rgba(17, 28, 44, 0.04),
+    0 1px 1px rgba(17, 28, 44, 0.03);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.card-surface:hover {
+  box-shadow:
+    0 12px 24px -12px rgba(0, 56, 116, 0.18),
+    0 4px 8px -4px rgba(0, 56, 116, 0.08);
+  border-color: rgba(0, 56, 116, 0.18);
+}
+
+.card-surface-flat {
+  background: #ffffff;
+  border: 1px solid rgba(195, 198, 210, 0.5);
+  box-shadow:
+    0 1px 2px rgba(17, 28, 44, 0.04),
+    0 1px 1px rgba(17, 28, 44, 0.03);
+}
+
+.elevate-lg {
+  box-shadow:
+    0 20px 40px -16px rgba(0, 56, 116, 0.22),
+    0 8px 16px -8px rgba(0, 56, 116, 0.1);
+}
+
+.focus-ring {
+  outline: none;
+  transition: box-shadow 0.15s ease;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0, 56, 116, 0.25);
+}
+
+.nav-active-bar {
+  position: relative;
+}
+
+.nav-active-bar::before {
+  content: "";
+  position: absolute;
+  left: -0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  border-radius: 999px;
+  background: #ffffff;
+}

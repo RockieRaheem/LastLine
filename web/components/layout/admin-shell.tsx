@@ -6,23 +6,25 @@ import type { NavKey } from "./nav-items";
 
 export function AdminShell({
   active,
+  title,
+  subtitle,
   mobileNavItems,
   mobileActive,
   children,
 }: {
   active: NavKey;
+  title?: string;
+  subtitle?: string;
   mobileNavItems: MobileNavItem[];
   mobileActive: string;
   children: ReactNode;
 }) {
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen overflow-hidden mesh-bg">
       <Sidebar active={active} />
       <main className="flex-1 flex flex-col overflow-hidden">
-        <TopBar />
-        <div className="flex-1 overflow-y-auto p-4 md:p-stack-lg custom-scrollbar pb-24 md:pb-4">
-          {children}
-        </div>
+        <TopBar title={title} subtitle={subtitle} />
+        <div className="flex-1 overflow-y-auto p-4 md:p-stack-lg custom-scrollbar pb-24 md:pb-4">{children}</div>
         <MobileBottomNav items={mobileNavItems} active={mobileActive} />
       </main>
     </div>

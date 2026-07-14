@@ -12,13 +12,14 @@ export interface NavItem {
   icon: string;
   href: string;
   badge?: number;
+  group: "Operations" | "Oversight";
 }
 
 export const NAV_ITEMS: NavItem[] = [
-  { key: "dashboard", label: "Dashboard", icon: "dashboard", href: "/" },
-  { key: "programmes", label: "Programmes", icon: "inventory_2", href: "#" },
-  { key: "beneficiaries", label: "Beneficiaries", icon: "groups", href: "/beneficiaries" },
-  { key: "deliveries", label: "Deliveries", icon: "local_shipping", href: "/deliveries" },
-  { key: "fraud", label: "Fraud Alerts", icon: "report_problem", href: "/fraud", badge: 3 },
-  { key: "audit", label: "Audit Logs", icon: "verified_user", href: "/fraud" },
+  { key: "dashboard", label: "Dashboard", icon: "dashboard", href: "/", group: "Operations" },
+  { key: "programmes", label: "Programmes", icon: "inventory_2", href: "#", group: "Operations" },
+  { key: "beneficiaries", label: "Beneficiaries", icon: "groups", href: "/beneficiaries", group: "Operations" },
+  { key: "deliveries", label: "Deliveries", icon: "local_shipping", href: "/deliveries", group: "Operations" },
+  { key: "fraud", label: "Fraud Alerts", icon: "report_problem", href: "/fraud", badge: 3, group: "Oversight" },
+  { key: "audit", label: "Audit Logs", icon: "verified_user", href: "/fraud", group: "Oversight" },
 ];
