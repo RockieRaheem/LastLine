@@ -139,27 +139,27 @@ export default function ProgramDashboardPage() {
     >
       <div className="max-w-container-max mx-auto space-y-gutter">
         {/* Hero */}
-        <div className="hero-gradient rounded-3xl p-6 md:p-8 text-white relative overflow-hidden">
-          <div className="absolute -right-10 -top-10 opacity-10">
+        <div className="hero-gradient rounded-3xl p-6 md:p-8 relative overflow-hidden">
+          <div className="absolute -right-10 -top-10 opacity-[0.04]">
             <span className="material-symbols-outlined text-[180px]">hub</span>
           </div>
           <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] bg-white/15 px-2.5 py-1 rounded-full mb-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed" />
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] bg-secondary-container/60 text-on-secondary-container px-2.5 py-1 rounded-full mb-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary" />
                 System Operational
               </span>
-              <h1 className="text-headline-lg font-headline-lg tracking-tight">Good morning, Admin.</h1>
-              <p className="text-white/75 text-body-md mt-1 max-w-lg">
+              <h1 className="text-headline-lg font-headline-lg tracking-tight text-on-surface">Good morning, Admin.</h1>
+              <p className="text-on-surface-variant text-body-md mt-1 max-w-lg">
                 12,842 deliveries are in motion across Turkana. Every step is verified and anchored before a single
                 dollar reaches an off-ramp partner.
               </p>
             </div>
             <div className="flex gap-3">
-              <button className="focus-ring px-5 py-2.5 bg-white/10 hover:bg-white/20 border border-white/20 rounded-full text-sm font-bold transition-colors">
+              <button className="focus-ring px-5 py-2.5 bg-white border border-outline-variant hover:bg-surface-container rounded-full text-sm font-bold transition-colors text-on-surface">
                 View Reports
               </button>
-              <button className="focus-ring px-5 py-2.5 bg-white text-primary rounded-full text-sm font-bold hover:bg-white/90 transition-colors shadow-lg">
+              <button className="focus-ring px-5 py-2.5 bg-primary text-on-primary rounded-full text-sm font-bold hover:brightness-110 transition-all shadow-sm shadow-primary/25">
                 New Programme
               </button>
             </div>

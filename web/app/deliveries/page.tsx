@@ -126,7 +126,7 @@ export default function DeliveryDisbursementMonitorPage() {
               <button className="focus-ring px-5 py-2.5 border border-primary text-primary font-bold rounded-full hover:bg-surface-container-high transition-colors text-sm">
                 Export Audit Reports
               </button>
-              <button className="focus-ring px-5 py-2.5 bg-primary text-white font-bold rounded-full hover:bg-primary-container transition-all text-sm shadow-sm shadow-primary/30 flex items-center gap-2">
+              <button className="focus-ring px-5 py-2.5 bg-primary text-white font-bold rounded-full hover:brightness-110 transition-all text-sm shadow-sm shadow-primary/30 flex items-center gap-2">
                 <span className="material-symbols-outlined text-lg">add</span> New Programme
               </button>
             </div>
@@ -220,7 +220,7 @@ export default function DeliveryDisbursementMonitorPage() {
 
             {/* Live Feed Card */}
             <div className="card-surface rounded-2xl overflow-hidden">
-              <div className="p-4 hero-gradient text-white flex justify-between items-center">
+              <div className="p-4 bg-on-surface text-white flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <span className="material-symbols-outlined text-lg">bolt</span>
                   <h4 className="font-bold text-sm uppercase tracking-wider">Live Delivery Evidence Feed</h4>

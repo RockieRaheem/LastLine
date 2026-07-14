@@ -131,30 +131,32 @@ export default function FraudDetectionAuditCenterPage() {
     >
       <div className="max-w-container-max mx-auto w-full space-y-8">
         {/* Core Services Integrity Header */}
-        <section className="relative overflow-hidden hero-gradient text-white p-8 rounded-3xl shadow-xl">
-          <div className="absolute -right-6 -bottom-10 opacity-10">
+        <section className="relative overflow-hidden hero-gradient p-8 rounded-3xl">
+          <div className="absolute -right-6 -bottom-10 opacity-[0.03]">
             <span className="material-symbols-outlined text-[200px]">shield</span>
           </div>
           <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] bg-white/15 px-2.5 py-1 rounded-full mb-3">
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] bg-primary-container text-on-primary-container px-2.5 py-1 rounded-full mb-3">
                 <span className="material-symbols-outlined text-[14px]">hub</span>
                 SDP Transparency Engine
               </span>
-              <h3 className="text-headline-lg font-headline-lg mb-2">Every disbursement, publicly verifiable</h3>
-              <p className="text-white/80 text-body-lg max-w-xl">
+              <h3 className="text-headline-lg font-headline-lg mb-2 text-on-surface">
+                Every disbursement, publicly verifiable
+              </h3>
+              <p className="text-on-surface-variant text-body-lg max-w-xl">
                 The Stellar Disbursement Platform screens identity verification, proxy behaviour, and off-ramp
                 payouts in real time — then anchors the proof so nothing is settled without a trace.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                <p className="text-label-mono text-xs opacity-70 uppercase mb-1">Total Deliveries</p>
-                <p className="text-headline-md font-headline-md">142,803</p>
+              <div className="bg-surface-container-low p-4 rounded-2xl border border-outline-variant">
+                <p className="text-label-mono text-xs text-on-surface-variant uppercase mb-1">Total Deliveries</p>
+                <p className="text-headline-md font-headline-md text-on-surface">142,803</p>
               </div>
-              <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-                <p className="text-label-mono text-xs opacity-70 uppercase mb-1">Active Monitors</p>
-                <p className="text-headline-md font-headline-md">12 Nodes</p>
+              <div className="bg-surface-container-low p-4 rounded-2xl border border-outline-variant">
+                <p className="text-label-mono text-xs text-on-surface-variant uppercase mb-1">Active Monitors</p>
+                <p className="text-headline-md font-headline-md text-on-surface">12 Nodes</p>
               </div>
             </div>
           </div>

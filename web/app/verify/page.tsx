@@ -155,7 +155,7 @@ export default function BeneficiaryVerificationPage() {
                 </div>
                 <button
                   onClick={handleVerify}
-                  className="focus-ring w-full h-14 bg-primary text-on-primary font-bold text-body-lg rounded-full active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container flex items-center justify-center gap-2"
+                  className="focus-ring w-full h-14 bg-primary text-on-primary font-bold text-body-lg rounded-full active:scale-95 transition-all shadow-md shadow-primary/30 hover:brightness-110 flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined">verified_user</span>
                   Verify &amp; Release Payout

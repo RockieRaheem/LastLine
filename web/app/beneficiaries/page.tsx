@@ -149,7 +149,7 @@ export default function BeneficiaryRegistryPage() {
                 <span className="material-symbols-outlined text-[18px]">file_download</span>
                 Export Audit
               </button>
-              <button className="focus-ring flex items-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-full hover:bg-primary-container transition-colors text-sm font-bold shadow-sm shadow-primary/30">
+              <button className="focus-ring flex items-center gap-2 px-4 py-2.5 bg-primary text-on-primary rounded-full hover:brightness-110 transition-colors text-sm font-bold shadow-sm shadow-primary/30">
                 <span className="material-symbols-outlined text-[18px]">person_add</span>
                 Manual Entry
               </button>
@@ -233,7 +233,7 @@ export default function BeneficiaryRegistryPage() {
                       key={row.referenceId}
                       onClick={() => console.log(`Opening record: ${row.referenceId}`)}
                       className={`zebra-stripe transition-colors cursor-pointer group ${
-                        row.alert ? "hover:bg-error-container/10" : "hover:bg-primary-container/10"
+                        row.alert ? "hover:bg-error-container/10" : "hover:brightness-110/10"
                       }`}
                     >
                       <td className="px-6 py-4 font-label-mono text-primary font-bold">{row.referenceId}</td>

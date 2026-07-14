@@ -76,7 +76,7 @@ export function Sidebar({ active }: { active: NavKey }) {
         </Link>
       </div>
 
-      <button className="focus-ring w-full mt-3 bg-primary text-on-primary font-bold py-3 rounded-xl hover:bg-primary-container transition-colors flex items-center justify-center gap-2 shadow-sm shadow-primary/30">
+      <button className="focus-ring w-full mt-3 bg-primary text-on-primary font-bold py-3 rounded-xl hover:brightness-110 transition-colors flex items-center justify-center gap-2 shadow-sm shadow-primary/30">
         <span className="material-symbols-outlined text-[18px]">check_circle</span>
         Approve Batch
       </button>

@@ -207,7 +207,7 @@ export default function FieldRegistrationPage() {
 
               <button
                 onClick={() => setStep(2)}
-                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container"
+                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 hover:brightness-110"
               >
                 <span>Continue to Verification</span>
                 <span className="material-symbols-outlined">arrow_forward</span>
@@ -276,7 +276,7 @@ export default function FieldRegistrationPage() {
               </div>
               <button
                 onClick={() => setStep(3)}
-                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container"
+                className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-primary/30 hover:brightness-110"
               >
                 <span className="material-symbols-outlined">verified</span>
                 <span>Confirm &amp; Generate PIN</span>
@@ -407,7 +407,7 @@ export default function FieldRegistrationPage() {
             </div>
             <button
               onClick={registerNext}
-              className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container"
+              className="focus-ring w-full h-14 bg-primary text-on-primary rounded-full font-bold text-body-lg active:scale-95 transition-all shadow-md shadow-primary/30 hover:brightness-110"
             >
               Register Next Beneficiary
             </button>

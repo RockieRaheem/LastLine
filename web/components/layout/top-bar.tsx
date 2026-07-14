@@ -11,13 +11,13 @@ export function TopBar({ title, subtitle }: { title?: string; subtitle?: string 
         <img alt="TrustBridge Logo" className="h-8 w-auto object-contain md:hidden" src={TRUSTBRIDGE_LOGO} />
         {title ? (
           <div className="min-w-0 flex flex-col leading-tight">
-            <h1 className="text-body-lg md:text-headline-md font-headline-md font-bold text-primary truncate">
+            <h1 className="text-body-lg md:text-headline-md font-headline-md font-bold text-on-surface truncate">
               {title}
             </h1>
             {subtitle ? <p className="hidden sm:block text-[11px] text-on-surface-variant truncate">{subtitle}</p> : null}
           </div>
         ) : (
-          <h1 className="text-headline-md font-headline-md font-bold text-primary md:hidden">TrustBridge</h1>
+          <h1 className="text-headline-md font-headline-md font-bold text-on-surface md:hidden">TrustBridge</h1>
         )}
       </div>
 

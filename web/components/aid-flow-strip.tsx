@@ -15,7 +15,7 @@ const STEPS = [
     icon: "currency_exchange",
     title: "3. Off-Ramp Payout",
     desc: "Beneficiary confirms ID + PIN; an off-ramp partner converts funds to cash on their phone.",
-    tone: "bg-primary text-on-primary",
+    tone: "bg-tertiary text-on-tertiary",
   },
 ];
 
