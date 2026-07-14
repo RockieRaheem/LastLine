@@ -15,8 +15,15 @@ const MOBILE_NAV = [
 
 const ACTIVE_KEY = "deliveries";
 
+const PROCESSING_STAGES = [
+  { icon: "fingerprint", label: "Confirming ID + PIN…" },
+  { icon: "hub", label: "SDP screening for fraud…" },
+  { icon: "currency_exchange", label: "Routing to off-ramp partner…" },
+];
+
 export default function BeneficiaryVerificationPage() {
   const [flowState, setFlowState] = useState<FlowState>("pin");
+  const [stageIndex, setStageIndex] = useState(0);
   const [pins, setPins] = useState(["", "", "", ""]);
   const [errorShake, setErrorShake] = useState(false);
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
@@ -45,16 +52,21 @@ export default function BeneficiaryVerificationPage() {
       return;
     }
     setFlowState("processing");
-    setTimeout(() => setFlowState("success"), 2500);
+    setStageIndex(0);
+    PROCESSING_STAGES.forEach((_, i) => {
+      setTimeout(() => setStageIndex(i), i * 900);
+    });
+    setTimeout(() => setFlowState("success"), PROCESSING_STAGES.length * 900);
   }
 
   function handleReturnHome() {
     setPins(["", "", "", ""]);
     setFlowState("pin");
+    setStageIndex(0);
   }
 
   return (
-    <div className="bg-surface text-on-surface min-h-screen flex flex-col font-body-md overflow-x-hidden">
+    <div className="mesh-bg text-on-surface min-h-screen flex flex-col font-body-md overflow-x-hidden">
       {/* Top App Bar (Mobile Context) */}
       <header className="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant flex justify-between items-center h-16 px-margin-mobile">
         <div className="flex items-center gap-3">
@@ -62,28 +74,32 @@ export default function BeneficiaryVerificationPage() {
           <img alt="TrustBridge" className="h-8 w-auto object-contain" src={TRUSTBRIDGE_LOGO} />
         </div>
         <div className="flex items-center gap-2 px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full">
-          <span className="material-symbols-outlined text-[18px]" style={{ fontVariationSettings: "'FILL' 1" }}>
-            cloud_done
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-secondary" />
           </span>
           <span className="text-label-mono font-label-mono text-[12px]">ONLINE</span>
         </div>
       </header>
 
-      <main className="flex-1 mt-16 pb-24 px-margin-mobile flex flex-col items-center justify-start max-w-lg mx-auto w-full">
-        {/* Connectivity & Context Header */}
+      <main className="flex-1 mt-16 pb-28 px-margin-mobile flex flex-col items-center justify-start max-w-lg mx-auto w-full">
+        {/* Context Header */}
         <div className="w-full pt-8 pb-6 space-y-2">
           <div className="flex items-center gap-2 text-on-surface-variant">
-            <span className="material-symbols-outlined text-[20px]">local_shipping</span>
-            <p className="text-label-mono font-label-mono uppercase tracking-wider">Verification Phase</p>
+            <span className="material-symbols-outlined text-[20px]">currency_exchange</span>
+            <p className="text-label-mono font-label-mono uppercase tracking-wider">Off-Ramp Collection</p>
           </div>
           <h1 className="text-headline-lg-mobile font-headline-lg-mobile text-primary">Final Delivery Auth</h1>
+          <p className="text-sm text-on-surface-variant">
+            Confirm the beneficiary&apos;s ID + PIN — SDP verifies it, then MoneyGram releases the cash.
+          </p>
         </div>
 
         {/* Task Info Card */}
-        <div className="w-full bg-white border border-outline-variant rounded-xl p-stack-md shadow-sm mb-stack-md">
+        <div className="w-full card-surface-flat rounded-2xl p-stack-md mb-stack-md">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <p className="text-on-surface-variant text-label-mono font-label-mono mb-1">REF ID</p>
+              <p className="text-on-surface-variant text-label-mono font-label-mono mb-1">REFERENCE ID</p>
               <p className="text-headline-md font-headline-md text-primary">TB-392819</p>
             </div>
             <div className="text-right">
@@ -99,6 +115,10 @@ export default function BeneficiaryVerificationPage() {
               <p className="text-body-md font-semibold">Samuel Okoth</p>
               <p className="text-on-surface-variant text-[14px]">Primary Beneficiary</p>
             </div>
+            <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-bold text-secondary bg-secondary-container/30 px-2 py-1 rounded-full">
+              <span className="material-symbols-outlined text-[12px]">check_circle</span>
+              ID Matched
+            </span>
           </div>
         </div>
 
@@ -123,7 +143,7 @@ export default function BeneficiaryVerificationPage() {
                         value={digit}
                         onChange={(e) => handlePinChange(index, e.target.value)}
                         onKeyDown={(e) => handleKeyDown(index, e)}
-                        className={`pin-box w-14 h-16 text-center text-headline-lg font-label-mono bg-surface-container-low border-2 rounded-xl focus:outline-none focus:ring-0 transition-all ${
+                        className={`pin-box w-14 h-16 text-center text-headline-lg font-label-mono bg-surface-container-low border-2 rounded-2xl shadow-sm focus:outline-none focus:ring-0 transition-all ${
                           errorShake ? "border-error" : "border-outline-variant"
                         }`}
                         maxLength={1}
@@ -135,10 +155,10 @@ export default function BeneficiaryVerificationPage() {
                 </div>
                 <button
                   onClick={handleVerify}
-                  className="w-full h-14 bg-primary text-on-primary font-bold text-body-lg rounded-xl active:scale-95 transition-transform flex items-center justify-center gap-2"
+                  className="focus-ring w-full h-14 bg-primary text-on-primary font-bold text-body-lg rounded-full active:scale-95 transition-all shadow-md shadow-primary/30 hover:bg-primary-container flex items-center justify-center gap-2"
                 >
                   <span className="material-symbols-outlined">verified_user</span>
-                  Verify &amp; Complete
+                  Verify &amp; Release Payout
                 </button>
                 <p className="text-center text-label-mono font-label-mono text-on-surface-variant px-4">
                   By clicking verify, you confirm the physical presence of the beneficiary and secure identity match.
@@ -147,14 +167,29 @@ export default function BeneficiaryVerificationPage() {
             )}
 
             {flowState === "processing" && (
-              <div className="flex flex-col items-center justify-center py-12 space-y-6">
+              <div className="flex flex-col items-center justify-center py-12 space-y-8">
                 <div className="relative w-20 h-20">
                   <div className="absolute inset-0 border-4 border-primary/20 rounded-full" />
                   <div className="absolute inset-0 border-4 border-t-primary rounded-full animate-spin" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="material-symbols-outlined text-primary text-[24px]">
+                      {PROCESSING_STAGES[stageIndex].icon}
+                    </span>
+                  </div>
                 </div>
                 <div className="text-center">
-                  <h2 className="text-headline-md font-headline-md text-primary">Verifying...</h2>
-                  <p className="text-on-surface-variant">Hashing evidence and anchoring to Stellar</p>
+                  <h2 className="text-headline-md font-headline-md text-primary">Processing…</h2>
+                  <p className="text-on-surface-variant mt-1">{PROCESSING_STAGES[stageIndex].label}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  {PROCESSING_STAGES.map((stage, i) => (
+                    <span
+                      key={stage.label}
+                      className={`h-1.5 rounded-full transition-all ${
+                        i <= stageIndex ? "w-8 bg-primary" : "w-4 bg-outline-variant"
+                      }`}
+                    />
+                  ))}
                 </div>
               </div>
             )}
@@ -169,16 +204,38 @@ export default function BeneficiaryVerificationPage() {
                     check_circle
                   </span>
                 </div>
-                <div className="text-center space-y-2">
-                  <h2 className="text-headline-lg-mobile font-headline-lg-mobile text-secondary">Success!</h2>
-                  <p className="text-body-lg font-medium">Assistance Released</p>
-                  <div className="bg-secondary-container/30 px-4 py-2 rounded-lg border border-secondary/20 inline-block">
-                    <p className="text-label-mono font-label-mono text-on-secondary-container">TX: b5a7...89e2</p>
+                <div className="text-center space-y-1">
+                  <h2 className="text-headline-lg-mobile font-headline-lg-mobile text-secondary">Cash Released</h2>
+                  <p className="text-body-lg font-medium">KES 5,000 is ready for Samuel to collect</p>
+                </div>
+
+                <div className="w-full card-surface-flat rounded-2xl p-5 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-on-surface-variant flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-primary">storefront</span>
+                      Payout Channel
+                    </span>
+                    <span className="text-sm font-bold text-on-surface">MoneyGram · Mobile Money</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-on-surface-variant flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-primary">confirmation_number</span>
+                      Collection Code
+                    </span>
+                    <span className="text-sm font-bold font-label-mono text-primary">MG-7734-KE</span>
+                  </div>
+                  <div className="pt-3 border-t border-outline-variant/60 flex items-center justify-between">
+                    <span className="text-xs text-on-surface-variant flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-[16px] text-secondary">hub</span>
+                      Stellar Proof
+                    </span>
+                    <span className="text-[11px] font-label-mono text-on-surface-variant">TX: b5a7...89e2</span>
                   </div>
                 </div>
+
                 <button
                   onClick={handleReturnHome}
-                  className="w-full h-14 bg-surface-container-high border border-outline-variant text-on-surface font-bold text-body-lg rounded-xl"
+                  className="focus-ring w-full h-14 bg-surface-container-high border border-outline-variant text-on-surface font-bold text-body-lg rounded-full hover:bg-surface-variant transition-colors"
                 >
                   Return to Home
                 </button>
