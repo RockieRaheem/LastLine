@@ -122,16 +122,29 @@ const AUDIT_EVENTS: AuditEvent[] = [
 
 export default function FraudDetectionAuditCenterPage() {
   return (
-    <AdminShell active="fraud" mobileNavItems={MOBILE_NAV_ITEMS} mobileActive="alerts">
+    <AdminShell
+      active="fraud"
+      title="Fraud Detection"
+      subtitle="System Core Online"
+      mobileNavItems={MOBILE_NAV_ITEMS}
+      mobileActive="alerts"
+    >
       <div className="max-w-container-max mx-auto w-full space-y-8">
         {/* Core Services Integrity Header */}
-        <section className="relative overflow-hidden bg-primary-container text-on-primary-container p-8 rounded-3xl shadow-xl">
+        <section className="relative overflow-hidden hero-gradient text-white p-8 rounded-3xl shadow-xl">
+          <div className="absolute -right-6 -bottom-10 opacity-10">
+            <span className="material-symbols-outlined text-[200px]">shield</span>
+          </div>
           <div className="relative z-10 grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h3 className="text-headline-lg font-headline-lg mb-2">TrustBridge Core Services</h3>
-              <p className="text-on-primary-container/80 text-body-lg max-w-xl">
-                Real-time monitoring of identity verification, proxy management, and encrypted data layers. All
-                services operating within acceptable latency parameters.
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.15em] bg-white/15 px-2.5 py-1 rounded-full mb-3">
+                <span className="material-symbols-outlined text-[14px]">hub</span>
+                SDP Transparency Engine
+              </span>
+              <h3 className="text-headline-lg font-headline-lg mb-2">Every disbursement, publicly verifiable</h3>
+              <p className="text-white/80 text-body-lg max-w-xl">
+                The Stellar Disbursement Platform screens identity verification, proxy behaviour, and off-ramp
+                payouts in real time — then anchors the proof so nothing is settled without a trace.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -275,6 +288,16 @@ export default function FraudDetectionAuditCenterPage() {
                   </div>
                   <div className="ml-auto text-primary text-sm font-bold">Healthy</div>
                 </div>
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 rounded-full bg-tertiary-container/20 text-tertiary flex items-center justify-center">
+                    <span className="material-symbols-outlined">currency_exchange</span>
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold">Off-Ramp Settlement</p>
+                    <p className="text-xs text-on-surface-variant">MoneyGram payout reconciliation</p>
+                  </div>
+                  <div className="ml-auto text-secondary text-sm font-bold">99.4%</div>
+                </div>
               </div>
               <div className="p-4 bg-surface-container-low rounded-2xl">
                 <div className="flex items-center justify-between mb-2">
@@ -300,10 +323,10 @@ export default function FraudDetectionAuditCenterPage() {
                 </p>
               </div>
               <div className="flex gap-2">
-                <button className="flex items-center gap-2 px-4 py-2 bg-surface-container-high rounded-xl text-sm font-bold border border-outline-variant">
+                <button className="focus-ring flex items-center gap-2 px-4 py-2 bg-white hover:bg-surface-container-high rounded-full text-sm font-bold border border-outline-variant transition-colors">
                   <span className="material-symbols-outlined text-sm">filter_list</span> Filter
                 </button>
-                <button className="flex items-center gap-2 px-4 py-2 bg-surface-container-high rounded-xl text-sm font-bold border border-outline-variant">
+                <button className="focus-ring flex items-center gap-2 px-4 py-2 bg-white hover:bg-surface-container-high rounded-full text-sm font-bold border border-outline-variant transition-colors">
                   <span className="material-symbols-outlined text-sm">download</span> Export CSV
                 </button>
               </div>
